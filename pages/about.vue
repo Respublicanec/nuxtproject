@@ -1,1 +1,1 @@
-<template>About page</template>
+<template>My lilte page</template>
