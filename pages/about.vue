@@ -18,6 +18,8 @@
   <button v-on:click="rrg+='-'">-</button>
   <button v-on:click="rrg+='0'">0</button>
   <button v-on:click="rrg+='+'">+</button>
+  <button v-on:click="rrg+='*'">*</button>
+  <button v-on:click="rrg+='/'">/</button>
 </div>
 <div class="calculate1">
  
