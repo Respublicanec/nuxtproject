@@ -68,7 +68,7 @@
 <div class="container">
       <hr>
         <strong >Общее количество: {{ notes.length }}</strong> 
-      </div>
+</div>
 
 
 </template>
