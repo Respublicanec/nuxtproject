@@ -4,16 +4,14 @@
         <nav>
             <ul>
               <nuxt-link to="/about">Калькулятор</nuxt-link>
-    <br>
-    <NuxtLink to="/">INDEXX</NuxtLink>
-    <br>
-    <nuxt-link to="/users">users</nuxt-link>
-    <br>
-    <NuxtPage></NuxtPage>
+             <br>
+            <NuxtLink to="/">INDEXX</NuxtLink>
+            <br>
+            <nuxt-link to="/notes">noffftes</nuxt-link>
+             <br>
+            <NuxtPage></NuxtPage>
             </ul>
-        </nav>
-   
-  
+         </nav> 
   </div>
 </template>
 
