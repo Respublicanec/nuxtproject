@@ -3,11 +3,13 @@
     <h1>Крутой сайт</h1>
         <nav>
             <ul>
-              <nuxt-link to="/about">Калькулятор</nuxt-link>
+              <nuxt-link to="/calculator">Калькулятор</nuxt-link>
              <br>
             <NuxtLink to="/">INDEXX</NuxtLink>
             <br>
-            <nuxt-link to="/notes">noffftes</nuxt-link>
+            <nuxt-link to="/notes">Заметки</nuxt-link>
+             <br>
+             <nuxt-link to="/test">Тест</nuxt-link>
              <br>
             <NuxtPage></NuxtPage>
             </ul>

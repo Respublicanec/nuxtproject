@@ -1,10 +1,9 @@
 <template>
 <div class="calculate">
   <input class="num" v-model="rrg" placeholder="0">
-
+<h1>{{result}}</h1>
 </div>
 <div class="calculate">
-
 
   <button v-on:click="rrg+='1'">1</button>
   <button v-on:click="rrg+='2'">2</button>
@@ -33,7 +32,7 @@
 <script setup>
 import { ref } from 'vue'
 const rrg = ref('')
-const result = ref(0)
+const result = ref(rrg)
 function calculateResult() {
   try {
     rrg.value = eval(rrg.value); 
