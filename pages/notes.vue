@@ -71,11 +71,11 @@ const getRandomColor = () => {
 
 const addNote = () => {
   const newNote = {
-    title: inputValue.value,
+    title: titleNoteValue.value,
     bgColor: getRandomColor(),
   };
   notes.value.push(newNote);
-  inputValue.value = "";
+  titleNoteValue.value = "";
   visibilitiModal.value = false;
 };
 
