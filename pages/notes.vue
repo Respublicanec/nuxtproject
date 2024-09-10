@@ -6,8 +6,8 @@
     <div>
       <h1
         :style="{
-          color: inputValue.length < 5 ? 'darkred' : 'darkblue',
-          fontSize: inputValue.length < 6 ? '2rem' : '1.5rem',
+          color: titleNoteValue.length < 5 ? 'darkred' : 'darkblue',
+          fontSize: titleNoteValue.length < 6 ? '2rem' : '1.5rem',
         }"
       >
         Ваши заметки
