@@ -15,21 +15,14 @@
       <div v-if="noteModal" class="Modal">
         <div class="modalInput">
           <input
-            class=""
+            class="input"
             type="text"
             v-bind:placeholder="placeholderString"
             v-model="inputValue"
             v-on:keypress.enter="addNote"
           />
         </div>
-        <div class="color">
-          <button
-            class="btnColor"
-            v-for="(color, indexColor) in colorList"
-            :style="{ backgroundColor: color }"
-            v-on:click="selectedColor = color"
-          ></button>
-        </div>
+
         <div class="btnCon">
           <button class="btnNew" v-on:click="modalCancel">Отмена</button>
           <button class="btnNew" v-on:click="addNote">Добавить</button>
@@ -40,7 +33,7 @@
           v-for="(note, index) in notes"
           :key="index"
           class="note list-item"
-          :style="{ backgroundColor: note.backgroundColor }"
+          :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
             <button class="btn" v-on:click="notes.splice(index, 1)">x</button>
@@ -61,7 +54,7 @@
   </div>
   <div class="container">
     <hr />
-    <strong>Общее количество: {{ notes.length }}</strong>
+    <strong>Общее количество: {{ itemCount }}</strong>
   </div>
 </template>
 
@@ -71,24 +64,31 @@ import { ref } from "vue";
 const title = ref("Ваши заметки");
 const placeholderString = ref("Введите название заметки");
 const inputValue = ref("");
-const colorList = ["red", "blue", "pink"];
-const selectedColor = ref("");
-const notes = ref([
-  { note: "Заметка 1", backgroundColor: "red" },
-  { note: "Заметка 2", backgroundColor: "blue" },
-]);
+const bgColor = ref(getRandomColor());
+const notes = ref([{ note: "Заметка 1" }]);
 const noteModal = ref(false);
+
+function getRandomColor() {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  console.log(color);
+  return color;
+}
 
 function addNote() {
   const newNote = {
     note: inputValue.value,
-    backgroundColor: selectedColor.value,
+    bgColor: getRandomColor(),
   };
   notes.value.push(newNote);
   inputValue.value = "";
-  selectedColor.value = "";
   noteModal.value = false;
 }
+
+const itemCount = computed(() => notes.value.length);
 
 // function addNote() {
 //   if (inputValue.value.trim() !== '') {
@@ -144,16 +144,7 @@ function toUpperCase(note) {
   left: 80px;
   top: 5px;
 }
-.color {
-  position: absolute;
-  left: 70px;
-  top: 90px;
-}
-.btnColor {
-  width: 60px;
-  height: 60px;
-}
-input {
+.input {
   width: 280px;
   height: 40px;
   position: absolute;
