@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Button v-on:click="newNote">New</Button>
+    <button @click="visibilitiModal = true">New</button>
   </div>
   <div class="container">
     <div>
@@ -10,111 +10,80 @@
           fontSize: inputValue.length < 6 ? '2rem' : '1.5rem',
         }"
       >
-        {{ title }}
+        Ваши заметки
       </h1>
-      <div v-if="noteModal" class="Modal">
-        <div class="modalInput">
+      <div v-if="visibilitiModal" class="modal">
+        <div class="modal-input">
           <input
             class="input"
             type="text"
-            v-bind:placeholder="placeholderString"
-            v-model="inputValue"
-            v-on:keypress.enter="addNote"
+            placeholder="Введите название заметки"
+            v-model="titleNoteValue"
+            @keypress.enter="addNote"
           />
         </div>
 
-        <div class="btnCon">
-          <button class="btnNew" v-on:click="modalCancel">Отмена</button>
-          <button class="btnNew" v-on:click="addNote">Добавить</button>
+        <div class="wrapper">
+          <button class="btn-new" @click="visibilitiModal = false">
+            Отмена
+          </button>
+          <button class="btn-new" @click="addNote">Добавить</button>
         </div>
       </div>
       <ul class="list">
         <li
           v-for="(note, index) in notes"
           :key="index"
-          class="note list-item"
+          class="note"
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
-            <button class="btn" v-on:click="notes.splice(index, 1)">x</button>
+            <button class="btn" @click="notes.splice(index, 1)">x</button>
           </div>
-          <!-- <span :class="note.length > 5 ? 'primary' : 'bold'"> {{toUpperCase(note)}} </span>  -->
-
-          <!-- <span :class="{
-        'primary' : true,
-        'bold' : note.length > 5
-      }"> {{toUpperCase(note)}} </span>  -->
-
-          <span class="text" v-text="note.note"> </span>
+          <span class="text"> {{ note.title }}</span>
         </li>
       </ul>
 
-      <div v-if="notes.length === 0">Заметок пока нет</div>
+      <div v-if="noteCount === 0">Заметок пока нет</div>
     </div>
   </div>
   <div class="container">
     <hr />
-    <strong>Общее количество: {{ itemCount }}</strong>
+    <strong>Общее количество: {{ noteCount }}</strong>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+const titleNoteValue = ref("");
 
-const title = ref("Ваши заметки");
-const placeholderString = ref("Введите название заметки");
-const inputValue = ref("");
-const bgColor = ref(getRandomColor());
-const notes = ref([{ note: "Заметка 1" }]);
-const noteModal = ref(false);
+const notes = ref([{ title: "Заметка 1", bgColor: "" }]);
 
-function getRandomColor() {
+const visibilitiModal = ref(false);
+
+const getRandomColor = () => {
   const letters = "0123456789ABCDEF";
   let color = "#";
   for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
-  console.log(color);
   return color;
-}
+};
 
-function addNote() {
+const addNote = () => {
   const newNote = {
-    note: inputValue.value,
+    title: inputValue.value,
     bgColor: getRandomColor(),
   };
   notes.value.push(newNote);
   inputValue.value = "";
-  noteModal.value = false;
-}
+  visibilitiModal.value = false;
+};
 
-const itemCount = computed(() => notes.value.length);
-
-// function addNote() {
-//   if (inputValue.value.trim() !== '') {
-//     notes.value.push(inputValue.value);
-//     inputValue.value = '';
-//     noteModal.value = false;
-//   } else {
-//     noteModal.value = false;
-//   }
-// };
-
-function newNote() {
-  noteModal.value = true;
-}
-
-function modalCancel() {
-  noteModal.value = false;
-}
-
-function toUpperCase(note) {
-  return note.toUpperCase();
-}
+const noteCount = computed(() => notes.value.length);
 </script>
 
-<style>
-.btnNew {
+<style scoped>
+.btn-new {
   width: 110px;
   background-color: #32ca49;
 }
@@ -125,7 +94,7 @@ function toUpperCase(note) {
   max-width: 750px;
   margin: auto;
 }
-.Modal {
+.modal {
   min-width: 250px;
   height: 220px;
   width: 300px;
@@ -134,21 +103,18 @@ function toUpperCase(note) {
   left: 650px;
   background-color: rgb(236, 176, 176);
 }
-.btnCon {
+.wrapper {
   position: absolute;
   left: 60px;
   top: 170px;
 }
 .modalInput {
-  position: absolute;
   left: 80px;
   top: 5px;
 }
 .input {
   width: 280px;
   height: 40px;
-  position: absolute;
-  left: -40px;
   top: 30px;
 }
 .list {
@@ -157,7 +123,7 @@ function toUpperCase(note) {
   flex-wrap: wrap;
 }
 
-.list-item {
+.note {
   display: flex;
   min-width: 220px;
   width: calc(33.33% - 20px);
@@ -174,7 +140,7 @@ function toUpperCase(note) {
   width: 25px;
   height: 25px;
 }
-.contButton {
+.btn-new {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
