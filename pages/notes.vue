@@ -6,8 +6,8 @@
     <div>
       <h1
         :style="{
-          color: inputValue.length < 5 ? 'darkred' : 'darkblue',
-          fontSize: inputValue.length < 6 ? '2rem' : '1.5rem',
+          color: titleNoteValue.length < 5 ? 'darkred' : 'darkblue',
+          fontSize: titleNoteValue.length < 6 ? '2rem' : '1.5rem',
         }"
       >
         Ваши заметки
@@ -71,11 +71,11 @@ const getRandomColor = () => {
 
 const addNote = () => {
   const newNote = {
-    title: inputValue.value,
+    title: titleNoteValue.value,
     bgColor: getRandomColor(),
   };
   notes.value.push(newNote);
-  inputValue.value = "";
+  titleNoteValue.value = "";
   visibilitiModal.value = false;
 };
 
@@ -84,26 +84,27 @@ const noteCount = computed(() => notes.value.length);
 
 <style scoped>
 .btn-new {
+  display: flex;
   width: 110px;
   background-color: #32ca49;
 }
 
 .container {
-  display: flex;
   flex-wrap: wrap;
-  max-width: 750px;
+  width: auto;
   margin: auto;
 }
 .modal {
   min-width: 250px;
-  height: 220px;
-  width: 300px;
+  height: 230px;
+  width: 320px;
   padding: 30px;
   position: absolute;
   left: 650px;
   background-color: rgb(236, 176, 176);
 }
 .wrapper {
+  display: flex;
   position: absolute;
   left: 60px;
   top: 170px;
@@ -118,23 +119,25 @@ const noteCount = computed(() => notes.value.length);
   top: 30px;
 }
 .list {
-  display: flex;
-  width: 100%;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+  width: auto;
 }
 
 .note {
-  display: flex;
-  min-width: 220px;
-  width: calc(33.33% - 20px);
-  height: 250px;
-  margin: 10px;
+  display: grid;
+  grid-template-columns: auto;
   text-align: center;
-  background-color: #ca3232;
-  flex-direction: column;
-  overflow-wrap: break-word;
+  max-width: auto;
+}
+.contButton {
+  text-align: right;
 }
 .text {
+  display: grid;
+  grid-row-start: 3;
+  max-width: 300px;
 }
 .btn {
   width: 25px;
