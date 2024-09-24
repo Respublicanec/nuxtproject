@@ -137,7 +137,6 @@ const noteCount = computed(() => notes.value.length);
 .text {
   display: grid;
   grid-row-start: 3;
-  max-width: 300px;
 }
 .btn {
   width: 25px;
