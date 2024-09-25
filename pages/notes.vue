@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="visibilitiModal = true">New</button>
+    <MyComponent @click="visibilitiModal = true" newNote="Создать" />
   </div>
   <div class="container">
     <div>
@@ -54,6 +54,8 @@
 </template>
 
 <script setup>
+import MyComponent from "@/components/Button.vue";
+
 const titleNoteValue = ref("");
 
 const notes = ref([{ title: "Заметка 1", bgColor: "" }]);
@@ -83,6 +85,9 @@ const noteCount = computed(() => notes.value.length);
 </script>
 
 <style scoped>
+.new-note {
+  width: 100px;
+}
 .btn-new {
   display: flex;
   width: 110px;
@@ -101,7 +106,8 @@ const noteCount = computed(() => notes.value.length);
   padding: 30px;
   position: absolute;
   left: 650px;
-  background-color: rgb(236, 176, 176);
+  background-color: rgb(196, 182, 182);
+  border: 2px solid rgb(111, 4, 4);
 }
 .wrapper {
   display: flex;
@@ -120,16 +126,25 @@ const noteCount = computed(() => notes.value.length);
 }
 .list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  padding: 0px;
+  margin: 0px;
+  grid-template-columns: repeat(auto-fill, minmax(303px, 1fr));
   gap: 5px;
   width: auto;
 }
 
+@media (min-width: 555px) and (max-width: 920px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .note {
   display: grid;
-  grid-template-columns: auto;
+  width: auto;
   text-align: center;
   max-width: auto;
+  border: 2px solid rgb(165, 165, 175);
 }
 .contButton {
   text-align: right;
