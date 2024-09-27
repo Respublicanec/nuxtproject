@@ -106,7 +106,6 @@ onMounted(loadNotes);
   width: 100px;
 }
 .btn-modal {
-  display: flex;
   width: 110px;
   background-color: #32ca49;
 }
@@ -173,10 +172,5 @@ onMounted(loadNotes);
 .btn {
   width: 25px;
   height: 25px;
-}
-.btn-modal {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
 }
 </style>
