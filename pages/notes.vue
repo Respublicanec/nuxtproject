@@ -1,6 +1,6 @@
 <template>
   <div>
-    <MyComponent @click="visibilitiModal = true" newNote="Создать" />
+    <BaseButton @click="visibilitiModal = true" newNote="Создать" />
   </div>
   <div class="container">
     <div>
@@ -54,8 +54,6 @@
 </template>
 
 <script setup>
-import MyComponent from "@/components/Button.vue";
-
 const loadNotes = () => {
   const storedNotes = localStorage.getItem("notes");
   if (storedNotes) {
