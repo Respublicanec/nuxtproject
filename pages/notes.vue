@@ -38,7 +38,7 @@
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
-            <button class="btn" @click="notes.splice(index, 1)">x</button>
+            <button class="btn" @click="deleteNote(index)">x</button>
           </div>
           <span class="text"> {{ note.title }}</span>
         </li>
@@ -55,6 +55,17 @@
 
 <script setup>
 import MyComponent from "@/components/Button.vue";
+
+const loadNotes = () => {
+  const storedNotes = localStorage.getItem("notes");
+  if (storedNotes) {
+    notes.value = JSON.parse(storedNotes);
+  }
+};
+
+const saveNotes = () => {
+  localStorage.setItem("notes", JSON.stringify(notes.value));
+};
 
 const titleNoteValue = ref("");
 
@@ -79,9 +90,17 @@ const addNote = () => {
   notes.value.push(newNote);
   titleNoteValue.value = "";
   visibilitiModal.value = false;
+  saveNotes();
 };
 
 const noteCount = computed(() => notes.value.length);
+
+const deleteNote = (index) => {
+  notes.value.splice(index, 1);
+  saveNotes();
+};
+
+onMounted(loadNotes);
 </script>
 
 <style scoped>
