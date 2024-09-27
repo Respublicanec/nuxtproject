@@ -24,10 +24,10 @@
         </div>
 
         <div class="wrapper">
-          <button class="btn-new" @click="visibilitiModal = false">
+          <button class="btn-modal" @click="visibilitiModal = false">
             Отмена
           </button>
-          <button class="btn-new" @click="addNote">Добавить</button>
+          <button class="btn-modal" @click="addNote">Добавить</button>
         </div>
       </div>
       <ul class="list">
@@ -105,7 +105,7 @@ onMounted(loadNotes);
 .new-note {
   width: 100px;
 }
-.btn-new {
+.btn-modal {
   display: flex;
   width: 110px;
   background-color: #32ca49;
@@ -174,7 +174,7 @@ onMounted(loadNotes);
   width: 25px;
   height: 25px;
 }
-.btn-new {
+.btn-modal {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
