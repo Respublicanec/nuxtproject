@@ -14,10 +14,10 @@
       </h1>
 
       <div>
-        <ModalNewNottes
+        <ModalCreateNote
           v-if="visibilitiModal"
           @cancel="visibilitiModal = false"
-          @newNotes="handleNewNotes"
+          @addNote="handleNewNotes"
         />
       </div>
 
@@ -70,6 +70,7 @@ const getRandomColor = () => {
   }
   return color;
 };
+
 const handleNewNotes = (note) => {
   notes.value.push({
     title: note,
@@ -93,6 +94,7 @@ onMounted(loadNotes);
 .new-note {
   width: 100px;
 }
+
 .btn-modal {
   width: 110px;
   background-color: #32ca49;
@@ -103,6 +105,7 @@ onMounted(loadNotes);
   width: auto;
   margin: auto;
 }
+
 .modal {
   min-width: 250px;
   height: 230px;
@@ -113,21 +116,25 @@ onMounted(loadNotes);
   background-color: rgb(196, 182, 182);
   border: 2px solid rgb(111, 4, 4);
 }
+
 .wrapper {
   display: flex;
   position: absolute;
   left: 60px;
   top: 170px;
 }
+
 .modalInput {
   left: 80px;
   top: 5px;
 }
+
 .input {
   width: 280px;
   height: 40px;
   top: 30px;
 }
+
 .list {
   display: grid;
   padding: 0px;
@@ -150,13 +157,16 @@ onMounted(loadNotes);
   max-width: auto;
   border: 2px solid rgb(165, 165, 175);
 }
+
 .contButton {
   text-align: right;
 }
+
 .text {
   display: grid;
   grid-row-start: 3;
 }
+
 .btn {
   width: 25px;
   height: 25px;

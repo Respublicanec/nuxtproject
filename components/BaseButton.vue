@@ -1,19 +1,18 @@
 <template>
-  <div class="new-note-conteiner">
+  <div>
     <button class="base-button">{{ title }}</button>
   </div>
 </template>
 
 <script setup>
 defineProps({
-  title: {},
+  title: {
+    type: String,
+  },
 });
 </script>
 
 <style>
-.new-note-conteiner {
-  width: 100px;
-}
 .base-button {
   width: 100px;
   border-radius: 50px;
