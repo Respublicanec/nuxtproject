@@ -22,13 +22,6 @@
             @keypress.enter="addNote"
           />
         </div>
-
-        <div class="wrapper">
-          <button class="btn-modal" @click="visibilitiModal = false">
-            Отмена
-          </button>
-          <button class="btn-modal" @click="addNote">Добавить</button>
-        </div>
       </div>
       <ul class="list">
         <li
