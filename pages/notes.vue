@@ -10,7 +10,7 @@
           fontSize: titleNoteValue.length < 6 ? '2rem' : '1.5rem',
         }"
       >
-        Ваши заметки
+        Ваши заметкиdsffsdfsdfsdf
       </h1>
       <div v-if="visibilitiModal" class="modal">
         <div class="modal-input">
