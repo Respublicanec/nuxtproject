@@ -1,12 +1,12 @@
 <template>
   <div class="new-note-conteiner">
-    <button class="new-note">{{ newNote }}</button>
+    <button class="base-button">{{ title }}</button>
   </div>
 </template>
 
 <script setup>
 defineProps({
-  newNote: {},
+  title: {},
 });
 </script>
 
@@ -14,7 +14,7 @@ defineProps({
 .new-note-conteiner {
   width: 100px;
 }
-.new-note {
+.base-button {
   width: 100px;
   border-radius: 50px;
   background: radial-gradient(circle, #e9e8e8, #0bbd08);
