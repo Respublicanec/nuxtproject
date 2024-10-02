@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseButton @click="visibilitiModal = true" newNote="Создать" />
+    <BaseButton @click="visibilitiModal = true" title="Создать" />
   </div>
   <div class="container">
     <div>
@@ -12,24 +12,15 @@
       >
         Ваши заметки
       </h1>
-      <div v-if="visibilitiModal" class="modal">
-        <div class="modal-input">
-          <input
-            class="input"
-            type="text"
-            placeholder="Введите название заметки"
-            v-model="titleNoteValue"
-            @keypress.enter="addNote"
-          />
-        </div>
 
-        <div class="wrapper">
-          <button class="btn-modal" @click="visibilitiModal = false">
-            Отмена
-          </button>
-          <button class="btn-modal" @click="addNote">Добавить</button>
-        </div>
+      <div>
+        <ModalNewNottes
+          v-if="visibilitiModal"
+          @cancel="visibilitiModal = false"
+          @newNotes="handleNewNotes"
+        />
       </div>
+
       <ul class="list">
         <li
           v-for="(note, index) in notes"
@@ -54,6 +45,10 @@
 </template>
 
 <script setup>
+const handleCancel = () => {
+  visibilitiModal.value = false;
+};
+
 const loadNotes = () => {
   const storedNotes = localStorage.getItem("notes");
   if (storedNotes) {
@@ -79,14 +74,11 @@ const getRandomColor = () => {
   }
   return color;
 };
-
-const addNote = () => {
-  const newNote = {
-    title: titleNoteValue.value,
+const handleNewNotes = (note) => {
+  notes.value.push({
+    title: note,
     bgColor: getRandomColor(),
-  };
-  notes.value.push(newNote);
-  titleNoteValue.value = "";
+  });
   visibilitiModal.value = false;
   saveNotes();
 };
