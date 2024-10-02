@@ -45,10 +45,6 @@
 </template>
 
 <script setup>
-const handleCancel = () => {
-  visibilitiModal.value = false;
-};
-
 const loadNotes = () => {
   const storedNotes = localStorage.getItem("notes");
   if (storedNotes) {
