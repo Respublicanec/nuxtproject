@@ -29,6 +29,7 @@
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
+            <button>edit</button>
             <button class="btn" @click="deleteNote(index)">x</button>
           </div>
           <span class="text"> {{ note.title }}</span>
