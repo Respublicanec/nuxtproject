@@ -1,6 +1,12 @@
 <template>
   <div>
-    <button class="base-button">{{ title }}</button>
+    <button
+      @mouseover="colorChangeButton = true"
+      @mouseleave="colorChangeButton = false"
+      :class="['base-button', { colorChangeButton }]"
+    >
+      {{ title }}
+    </button>
   </div>
 </template>
 
@@ -10,14 +16,23 @@ defineProps({
     type: String,
   },
 });
+
+const colorChangeButton = ref(false);
 </script>
 
 <style>
 .base-button {
-  width: 100px;
-  height: 40px;
+  width: auto;
+  height: 60px;
+  padding: 20px;
   border-radius: 50px;
-  background: radial-gradient(circle, #e9e8e8, #0bbd08);
-  border: none;
+  background: #505b60;
+  border-color: rgb(0, 0, 0);
+  left: 200px;
+  font-size: 16px;
+  color: white;
+}
+.colorChangeButton {
+  background: #9e9f9d;
 }
 </style>

@@ -15,8 +15,6 @@
         <br />
         <nuxt-link to="/test">Тест</nuxt-link>
         <br />
-        <nuxt-link to="/justButton"> Просто кнопка</nuxt-link>
-        <br />
         <NuxtPage></NuxtPage>
       </ul>
     </nav>
