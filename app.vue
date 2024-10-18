@@ -15,6 +15,8 @@
         <br />
         <nuxt-link to="/test">Тест</nuxt-link>
         <br />
+        <nuxt-link to="/testEmitt">Emit test</nuxt-link>
+        <br />
         <NuxtPage></NuxtPage>
       </ul>
     </nav>

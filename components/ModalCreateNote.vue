@@ -2,11 +2,7 @@
   <div>
     <div class="modal">
       <button class="btn-cancel" @click="emit('cancel')">x</button>
-      <input
-        class="text-note"
-        v-model="textNote"
-        placeholder="Введите текст заметки"
-      />
+      <BaseInput v-model="textNote" @textNoteModal="inputComponentAdd" />
       <BaseButton class="btn-new-note" @click="addNewNote" title="Добавить" />
     </div>
   </div>
@@ -14,11 +10,15 @@
 
 <script setup>
 const emit = defineEmits(["cancel", "addNote"]);
-const textNote = ref("");
 
+const textNoteComponent = ref("");
+
+const inputComponentAdd = (add) => {
+  textNoteComponent.value = add;
+};
 const addNewNote = () => {
-  emit("addNote", textNote.value);
-  textNote.value = "";
+  emit("addNote", textNoteComponent.value);
+  textNoteComponent.value = "";
 };
 </script>
 
