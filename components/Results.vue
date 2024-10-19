@@ -26,7 +26,7 @@ onMounted(() => {
 <style>
 .rank {
   font-size: 1.4em;
-  color: #0faf87;
+  color: #15ad87;
   font-weight: bold;
 }
 </style>
