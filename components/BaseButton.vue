@@ -1,23 +1,55 @@
 <template>
-  <div class="new-note-conteiner">
-    <button class="new-note">{{ newNote }}</button>
+  <div>
+    <button
+      @mouseover="colorChangeButton = true"
+      @mouseleave="colorChangeButton = false"
+      :class="['base-button', { colorChangeButton }]"
+      :style="{
+        borderRadius: borderRadius,
+        boxShadow: boxShadow,
+        padding: padding,
+        width: width,
+        borderColor: borderColor,
+      }"
+    >
+      {{ title }}
+    </button>
   </div>
 </template>
 
 <script setup>
 defineProps({
-  newNote: {},
+  title: {
+    type: String,
+  },
+  borderRadius: {
+    default: "50px",
+  },
+  boxShadow: {
+    default: "5px 10px 8px #9e9f9d",
+  },
+  padding: {
+    default: "20px",
+  },
+  width: {
+    default: "auto",
+  },
+  borderColor: {
+    default: "black",
+  },
 });
+
+const colorChangeButton = ref(false);
 </script>
 
 <style>
-.new-note-conteiner {
-  width: 100px;
+.base-button {
+  height: 60px;
+  background: #656f74;
+  font-size: 16px;
+  color: white;
 }
-.new-note {
-  width: 100px;
-  border-radius: 50px;
-  background: radial-gradient(circle, #e9e8e8, #0bbd08);
-  border: none;
+.colorChangeButton {
+  background: #9e9f9d;
 }
 </style>

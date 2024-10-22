@@ -1,6 +1,14 @@
 <template>
   <div>
-    <BaseButton @click="visibilitiModal = true" newNote="Создать" />
+    <BaseButton
+      @click="visibilitiModal = true"
+      title="Создать"
+      border-radius="20px"
+      box-shadow="5px 5px 8px #9e9f9d"
+      padding="10px"
+      width="150px"
+      borderColor="#3797c4"
+    />
   </div>
   <div class="container">
     <div>
@@ -12,17 +20,14 @@
       >
         Ваши заметки
       </h1>
-      <div v-if="visibilitiModal" class="modal">
-        <div class="modal-input">
-          <input
-            class="input"
-            type="text"
-            placeholder="Введите название заметки"
-            v-model="titleNoteValue"
-            @keypress.enter="addNote"
-          />
-        </div>
+      <div>
+        <ModalCreateNote
+          v-if="visibilitiModal"
+          @cancel="visibilitiModal = false"
+          @addNote="handleNewNotes"
+        />
       </div>
+
       <ul class="list">
         <li
           v-for="(note, index) in notes"
@@ -31,6 +36,7 @@
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
+            <button>edit</button>
             <button class="btn" @click="deleteNote(index)">x</button>
           </div>
           <span class="text"> {{ note.title }}</span>
@@ -73,13 +79,11 @@ const getRandomColor = () => {
   return color;
 };
 
-const addNote = () => {
-  const newNote = {
-    title: titleNoteValue.value,
+const handleNewNotes = (note) => {
+  notes.value.push({
+    title: note,
     bgColor: getRandomColor(),
-  };
-  notes.value.push(newNote);
-  titleNoteValue.value = "";
+  });
   visibilitiModal.value = false;
   saveNotes();
 };
@@ -98,6 +102,7 @@ onMounted(loadNotes);
 .new-note {
   width: 100px;
 }
+
 .btn-modal {
   width: 110px;
   background-color: #32ca49;
@@ -108,6 +113,7 @@ onMounted(loadNotes);
   width: auto;
   margin: auto;
 }
+
 .modal {
   min-width: 250px;
   height: 230px;
@@ -118,21 +124,25 @@ onMounted(loadNotes);
   background-color: rgb(196, 182, 182);
   border: 2px solid rgb(111, 4, 4);
 }
+
 .wrapper {
   display: flex;
   position: absolute;
   left: 60px;
   top: 170px;
 }
+
 .modalInput {
   left: 80px;
   top: 5px;
 }
+
 .input {
   width: 280px;
   height: 40px;
   top: 30px;
 }
+
 .list {
   display: grid;
   padding: 0px;
@@ -155,13 +165,16 @@ onMounted(loadNotes);
   max-width: auto;
   border: 2px solid rgb(165, 165, 175);
 }
+
 .contButton {
   text-align: right;
 }
+
 .text {
   display: grid;
   grid-row-start: 3;
 }
+
 .btn {
   width: 25px;
   height: 25px;
