@@ -4,6 +4,13 @@
       @mouseover="colorChangeButton = true"
       @mouseleave="colorChangeButton = false"
       :class="['base-button', { colorChangeButton }]"
+      :style="{
+        borderRadius: borderRadius,
+        boxShadow: boxShadow,
+        padding: padding,
+        width: width,
+        borderColor: borderColor,
+      }"
     >
       {{ title }}
     </button>
@@ -15,6 +22,21 @@ defineProps({
   title: {
     type: String,
   },
+  borderRadius: {
+    default: "50px",
+  },
+  boxShadow: {
+    default: "5px 10px 8px #9e9f9d",
+  },
+  padding: {
+    default: "20px",
+  },
+  width: {
+    default: "auto",
+  },
+  borderColor: {
+    default: "black",
+  },
 });
 
 const colorChangeButton = ref(false);
@@ -22,13 +44,8 @@ const colorChangeButton = ref(false);
 
 <style>
 .base-button {
-  width: auto;
   height: 60px;
-  padding: 20px;
-  border-radius: 50px;
-  background: #505b60;
-  border-color: rgb(0, 0, 0);
-  left: 200px;
+  background: #656f74;
   font-size: 16px;
   color: white;
 }

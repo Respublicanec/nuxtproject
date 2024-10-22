@@ -1,6 +1,14 @@
 <template>
   <div>
-    <BaseButton @click="visibilitiModal = true" title="Создать" />
+    <BaseButton
+      @click="visibilitiModal = true"
+      title="Создать"
+      border-radius="20px"
+      box-shadow="5px 5px 8px #9e9f9d"
+      padding="10px"
+      width="150px"
+      borderColor="#3797c4"
+    />
   </div>
   <div class="container">
     <div>
