@@ -20,7 +20,6 @@
       >
         Ваши заметки
       </h1>
-
       <div>
         <ModalCreateNote
           v-if="visibilitiModal"
