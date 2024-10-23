@@ -25,6 +25,7 @@
           v-if="visibilitiModal"
           @cancel="visibilitiModal = false"
           @addNote="handleNewNotes"
+          :textValue="editNoteProps"
         />
       </div>
 
@@ -36,7 +37,7 @@
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
-            <button>edit</button>
+            <button @click="editNote(index)">edit</button>
             <button class="btn" @click="deleteNote(index)">x</button>
           </div>
           <span class="text"> {{ note.title }}</span>
@@ -50,6 +51,7 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
+  <div>{{ editNoteProps }}</div>
 </template>
 
 <script setup>
@@ -62,6 +64,13 @@ const loadNotes = () => {
 
 const saveNotes = () => {
   localStorage.setItem("notes", JSON.stringify(notes.value));
+};
+
+const editNoteProps = ref();
+
+const editNote = (index) => {
+  visibilitiModal.value = true;
+  editNoteProps.value = notes.value[index].title;
 };
 
 const titleNoteValue = ref("");
