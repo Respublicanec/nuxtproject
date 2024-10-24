@@ -2,24 +2,37 @@
   <div>
     <div class="modal">
       <button class="btn-cancel" @click="emit('cancel')">x</button>
-      <BaseInput v-model="textNote" @textNoteModal="inputComponentAdd" />
-      <BaseButton class="btn-new-note" @click="addNewNote" title="Добавить" />
+      <BaseInput :modelValue="textNote" @textNoteModal="inputComponentAdd" />
+      <BaseButton class="btn-new-note" @click="addNewNote" :title="titleText" />
     </div>
   </div>
 </template>
 
 <script setup>
-const emit = defineEmits(["cancel", "addNote"]);
+const props = defineProps({
+  textValue: {
+    type: String,
+  },
+  numberIndex: {
+    type: Number,
+  },
+});
 
-const textNoteComponent = ref("");
+const emit = defineEmits(["cancel", "success"]);
 
-const inputComponentAdd = (add) => {
-  textNoteComponent.value = add;
+const textNote = ref(props.textValue);
+
+const inputComponentAdd = (value) => {
+  textNote.value = value;
 };
 const addNewNote = () => {
-  emit("addNote", textNoteComponent.value);
-  textNoteComponent.value = "";
+  emit("success", textNote.value);
+  textNote.value = "";
 };
+
+const titleText = computed(() => {
+  return !props.numberIndex === "" ? "Сохранить" : "Добавить";
+});
 </script>
 
 <style>
