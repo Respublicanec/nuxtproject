@@ -6,7 +6,6 @@
       :value="modelValue"
       @input="oneChange"
     />
-    <div>{{ modelValue }}</div>
   </div>
 </template>
 

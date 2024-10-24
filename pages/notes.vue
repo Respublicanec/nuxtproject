@@ -21,11 +21,12 @@
         Ваши заметки
       </h1>
       <div>
-        <ModalCreateNote
+        <ModalWindow
           v-if="visibilitiModal"
-          @cancel="visibilitiModal = false"
-          @addNote="handleNewNotes"
+          @cancel="cancelModal"
+          @success="handleNewNotes"
           :textValue="editNoteProps"
+          :numberIndex="editNoteIndex"
         />
       </div>
 
@@ -51,7 +52,7 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
-  <div>{{ editNoteProps }}</div>
+  <div>{{ editNoteIndex }}</div>
 </template>
 
 <script setup>
@@ -68,9 +69,12 @@ const saveNotes = () => {
 
 const editNoteProps = ref();
 
+const editNoteIndex = ref(null);
+
 const editNote = (index) => {
-  visibilitiModal.value = true;
+  editNoteIndex.value = index;
   editNoteProps.value = notes.value[index].title;
+  visibilitiModal.value = true;
 };
 
 const titleNoteValue = ref("");
@@ -78,6 +82,12 @@ const titleNoteValue = ref("");
 const notes = ref([{ title: "Заметка 1", bgColor: "" }]);
 
 const visibilitiModal = ref(false);
+
+const cancelModal = () => {
+  visibilitiModal.value = false;
+  editNoteIndex.value = null;
+  editNoteProps.value = "";
+};
 
 const getRandomColor = () => {
   const letters = "0123456789ABCDEF";
@@ -89,11 +99,20 @@ const getRandomColor = () => {
 };
 
 const handleNewNotes = (note) => {
-  notes.value.push({
-    title: note,
-    bgColor: getRandomColor(),
-  });
+  if (editNoteIndex.value !== null) {
+    notes.value[editNoteIndex.value] = {
+      title: note,
+      bgColor: notes.value[editNoteIndex.value].bgColor,
+    };
+  } else {
+    notes.value.push({
+      title: note,
+      bgColor: getRandomColor(),
+    });
+  }
   visibilitiModal.value = false;
+  editNoteIndex.value = "";
+  editNoteProps.value = "";
   saveNotes();
 };
 

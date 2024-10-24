@@ -3,8 +3,7 @@
     <div class="modal">
       <button class="btn-cancel" @click="emit('cancel')">x</button>
       <BaseInput :modelValue="textNote" @textNoteModal="inputComponentAdd" />
-      <BaseButton class="btn-new-note" @click="addNewNote" title="Добавить" />
-      <div>{{ textNote }}</div>
+      <BaseButton class="btn-new-note" @click="addNewNote" :title="titleText" />
     </div>
   </div>
 </template>
@@ -14,9 +13,12 @@ const props = defineProps({
   textValue: {
     type: String,
   },
+  numberIndex: {
+    type: Number,
+  },
 });
 
-const emit = defineEmits(["cancel", "addNote"]);
+const emit = defineEmits(["cancel", "success"]);
 
 const textNote = ref(props.textValue);
 
@@ -24,9 +26,13 @@ const inputComponentAdd = (value) => {
   textNote.value = value;
 };
 const addNewNote = () => {
-  emit("addNote", textNote.value);
+  emit("success", textNote.value);
   textNote.value = "";
 };
+
+const titleText = computed(() => {
+  return !props.numberIndex == "" ? "Сохранить" : "Добавить";
+});
 </script>
 
 <style>
