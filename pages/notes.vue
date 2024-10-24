@@ -21,7 +21,7 @@
         Ваши заметки
       </h1>
       <div>
-        <ModalWindow
+        <AddAndEditingNote
           v-if="visibilitiModal"
           @cancel="cancelModal"
           @success="handleNewNotes"
@@ -111,7 +111,7 @@ const handleNewNotes = (note) => {
     });
   }
   visibilitiModal.value = false;
-  editNoteIndex.value = "";
+  editNoteIndex.value = null;
   editNoteProps.value = "";
   saveNotes();
 };
