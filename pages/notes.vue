@@ -21,11 +21,11 @@
         Ваши заметки
       </h1>
       <div>
-        <AddAndEditingNote
+        <ModalEditCreateNote
           v-if="visibilitiModal"
           @cancel="cancelModal"
           @success="handleNewNotes"
-          :textValue="editNoteProps"
+          :textValue="defaultValue"
           :numberIndex="editNoteIndex"
         />
       </div>
@@ -67,13 +67,13 @@ const saveNotes = () => {
   localStorage.setItem("notes", JSON.stringify(notes.value));
 };
 
-const editNoteProps = ref();
+const defaultValue = ref();
 
 const editNoteIndex = ref(null);
 
 const editNote = (index) => {
   editNoteIndex.value = index;
-  editNoteProps.value = notes.value[index].title;
+  defaultValue.value = notes.value[index].title;
   visibilitiModal.value = true;
 };
 
@@ -86,7 +86,7 @@ const visibilitiModal = ref(false);
 const cancelModal = () => {
   visibilitiModal.value = false;
   editNoteIndex.value = null;
-  editNoteProps.value = "";
+  defaultValue.value = "";
 };
 
 const getRandomColor = () => {
@@ -99,20 +99,22 @@ const getRandomColor = () => {
 };
 
 const handleNewNotes = (note) => {
-  if (editNoteIndex.value !== null) {
-    notes.value[editNoteIndex.value] = {
-      title: note,
-      bgColor: notes.value[editNoteIndex.value].bgColor,
-    };
+  if (
+    editNoteIndex.value !== null &&
+    editNoteIndex.value < notes.value.length
+  ) {
+    const editNote = notes.value[editNoteIndex.value];
+    editNote.title = note;
   } else {
     notes.value.push({
       title: note,
       bgColor: getRandomColor(),
     });
   }
+
   visibilitiModal.value = false;
   editNoteIndex.value = null;
-  editNoteProps.value = "";
+  defaultValue.value = "";
   saveNotes();
 };
 

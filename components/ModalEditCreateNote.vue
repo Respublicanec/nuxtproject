@@ -31,7 +31,7 @@ const addNewNote = () => {
 };
 
 const titleText = computed(() => {
-  return !props.numberIndex == "" ? "Сохранить" : "Добавить";
+  return !props.numberIndex === "" ? "Сохранить" : "Добавить";
 });
 </script>
 
