@@ -27,9 +27,10 @@
           @success="handleNewNotes"
           :textValue="defaultValue"
           :numberIndex="editNoteIndex"
+          :editColor="readySelectedColor"
+          @color="noteColor"
         />
       </div>
-
       <ul class="list">
         <li
           v-for="(note, index) in notes"
@@ -52,7 +53,6 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
-  <div>{{ editNoteIndex }}</div>
 </template>
 
 <script setup>
@@ -61,6 +61,12 @@ const loadNotes = () => {
   if (storedNotes) {
     notes.value = JSON.parse(storedNotes);
   }
+};
+
+const readySelectedColor = ref("#2A3D0C");
+
+const noteColor = (value) => {
+  readySelectedColor.value = value;
 };
 
 const saveNotes = () => {
@@ -74,6 +80,7 @@ const editNoteIndex = ref(null);
 const editNote = (index) => {
   editNoteIndex.value = index;
   defaultValue.value = notes.value[index].title;
+  readySelectedColor.value = notes.value[index].bgColor;
   visibilitiModal.value = true;
 };
 
@@ -89,31 +96,25 @@ const cancelModal = () => {
   defaultValue.value = "";
 };
 
-const getRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-};
-
 const handleNewNotes = (note) => {
   if (
     editNoteIndex.value !== null &&
     editNoteIndex.value < notes.value.length
   ) {
     notes.value[editNoteIndex.value].title = note;
+    notes.value[editNoteIndex.value].bgColor = readySelectedColor.value;
   } else {
     notes.value.push({
       title: note,
-      bgColor: getRandomColor(),
+      bgColor: readySelectedColor.value,
     });
   }
 
   visibilitiModal.value = false;
   editNoteIndex.value = null;
   defaultValue.value = "";
+  readySelectedColor.value = "#2A3D0C";
+
   saveNotes();
 };
 
