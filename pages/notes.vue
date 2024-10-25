@@ -103,8 +103,7 @@ const handleNewNotes = (note) => {
     editNoteIndex.value !== null &&
     editNoteIndex.value < notes.value.length
   ) {
-    const editNote = notes.value[editNoteIndex.value];
-    editNote.title = note;
+    notes.value[editNoteIndex.value].title = note;
   } else {
     notes.value.push({
       title: note,
