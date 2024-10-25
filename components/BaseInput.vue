@@ -2,9 +2,8 @@
   <div>
     <input
       :class="['just-input', { colorChangeInput }]"
-      :type="typeText"
       placeholder="Введитетекст заметки"
-      v-model="textInput"
+      :value="modelValue"
       @input="oneChange"
     />
   </div>
@@ -13,10 +12,15 @@
 <script setup>
 const emit = defineEmits(["textNoteModal"]);
 
-const textInput = ref("");
+const props = defineProps({
+  modelValue: {
+    type: String,
+    default: "",
+  },
+});
 
-const oneChange = () => {
-  emit("textNoteModal", textInput.value);
+const oneChange = (evt) => {
+  emit("textNoteModal", evt.target.value);
 };
 </script>
 

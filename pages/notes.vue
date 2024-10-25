@@ -21,10 +21,12 @@
         Ваши заметки
       </h1>
       <div>
-        <ModalCreateNote
+        <ModalEditCreateNote
           v-if="visibilitiModal"
-          @cancel="visibilitiModal = false"
-          @addNote="handleNewNotes"
+          @cancel="cancelModal"
+          @success="handleNewNotes"
+          :textValue="defaultValue"
+          :numberIndex="editNoteIndex"
         />
       </div>
 
@@ -36,7 +38,7 @@
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
-            <button>edit</button>
+            <button @click="editNote(index)">edit</button>
             <button class="btn" @click="deleteNote(index)">x</button>
           </div>
           <span class="text"> {{ note.title }}</span>
@@ -50,6 +52,7 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
+  <div>{{ editNoteIndex }}</div>
 </template>
 
 <script setup>
@@ -64,11 +67,27 @@ const saveNotes = () => {
   localStorage.setItem("notes", JSON.stringify(notes.value));
 };
 
+const defaultValue = ref();
+
+const editNoteIndex = ref(null);
+
+const editNote = (index) => {
+  editNoteIndex.value = index;
+  defaultValue.value = notes.value[index].title;
+  visibilitiModal.value = true;
+};
+
 const titleNoteValue = ref("");
 
 const notes = ref([{ title: "Заметка 1", bgColor: "" }]);
 
 const visibilitiModal = ref(false);
+
+const cancelModal = () => {
+  visibilitiModal.value = false;
+  editNoteIndex.value = null;
+  defaultValue.value = "";
+};
 
 const getRandomColor = () => {
   const letters = "0123456789ABCDEF";
@@ -80,11 +99,21 @@ const getRandomColor = () => {
 };
 
 const handleNewNotes = (note) => {
-  notes.value.push({
-    title: note,
-    bgColor: getRandomColor(),
-  });
+  if (
+    editNoteIndex.value !== null &&
+    editNoteIndex.value < notes.value.length
+  ) {
+    notes.value[editNoteIndex.value].title = note;
+  } else {
+    notes.value.push({
+      title: note,
+      bgColor: getRandomColor(),
+    });
+  }
+
   visibilitiModal.value = false;
+  editNoteIndex.value = null;
+  defaultValue.value = "";
   saveNotes();
 };
 
