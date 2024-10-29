@@ -27,8 +27,6 @@
           @success="handleNewNotes"
           :textValue="defaultValue"
           :numberIndex="editNoteIndex"
-          :editColor="readySelectedColor"
-          @color="noteColor"
         />
       </div>
       <ul class="list">
@@ -63,24 +61,21 @@ const loadNotes = () => {
   }
 };
 
-const readySelectedColor = ref("#2A3D0C");
-
-const noteColor = (value) => {
-  readySelectedColor.value = value;
-};
-
 const saveNotes = () => {
   localStorage.setItem("notes", JSON.stringify(notes.value));
 };
 
-const defaultValue = ref();
+const defaultValue = ref({
+  title: "",
+  bgColor: "#ffffff",
+});
 
 const editNoteIndex = ref(null);
 
 const editNote = (index) => {
   editNoteIndex.value = index;
-  defaultValue.value = notes.value[index].title;
-  readySelectedColor.value = notes.value[index].bgColor;
+  defaultValue.value.title = notes.value[index].title;
+  defaultValue.value.bgColor = notes.value[index].bgColor;
   visibilitiModal.value = true;
 };
 
@@ -93,7 +88,8 @@ const visibilitiModal = ref(false);
 const cancelModal = () => {
   visibilitiModal.value = false;
   editNoteIndex.value = null;
-  defaultValue.value = "";
+  defaultValue.value.title = "";
+  defaultValue.value.bgColor = "#ffffff";
 };
 
 const handleNewNotes = (note) => {
@@ -101,20 +97,19 @@ const handleNewNotes = (note) => {
     editNoteIndex.value !== null &&
     editNoteIndex.value < notes.value.length
   ) {
-    notes.value[editNoteIndex.value].title = note;
-    notes.value[editNoteIndex.value].bgColor = readySelectedColor.value;
+    notes.value[editNoteIndex.value].title = note.title;
+    notes.value[editNoteIndex.value].bgColor = note.bgColor;
   } else {
     notes.value.push({
-      title: note,
-      bgColor: readySelectedColor.value,
+      title: note.title,
+      bgColor: note.bgColor,
     });
   }
 
   visibilitiModal.value = false;
   editNoteIndex.value = null;
-  defaultValue.value = "";
-  readySelectedColor.value = "#2A3D0C";
-
+  defaultValue.value.title = "";
+  defaultValue.value.bgColor = "#ffffff";
   saveNotes();
 };
 

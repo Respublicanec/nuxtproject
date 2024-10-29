@@ -3,14 +3,20 @@
     <input
       :class="['just-input', { colorChangeInput }]"
       placeholder="Введитетекст заметки"
-      :value="modelValue"
+      :value="inputData.title"
       @input="oneChange"
+    />
+    <input
+      type="color"
+      :class="['just-input', 'input-color', { colorChangeInput }]"
+      :value="inputData.bgColor"
+      @input="dataNote"
     />
   </div>
 </template>
 
 <script setup>
-const emit = defineEmits(["textNoteModal"]);
+const emit = defineEmits(["textNoteModal", "color"]);
 
 const props = defineProps({
   modelValue: {
@@ -19,15 +25,23 @@ const props = defineProps({
   },
 });
 
+const inputData = ref(props.modelValue);
+
 const oneChange = (evt) => {
-  emit("textNoteModal", evt.target.value);
+  inputData.value.title = evt.target.value;
+  emit("textNoteModal", inputData.value);
+};
+
+const dataNote = (evt) => {
+  inputData.value.bgColor = evt.target.value;
+  emit("textNoteModal", inputData.value);
 };
 </script>
 
 <style>
 .just-input {
   width: 200px;
-  margin-left: 55px;
+  margin-left: 50px;
   border: 2px solid #505b60;
   border-radius: 5px;
 }
@@ -40,5 +54,9 @@ const oneChange = (evt) => {
 .just-input:focus {
   border-width: 3px;
   border-color: #000000;
+}
+.input-color {
+  height: 40px;
+  padding: 0px;
 }
 </style>

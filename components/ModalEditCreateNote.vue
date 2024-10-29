@@ -2,16 +2,11 @@
   <div>
     <div class="modal">
       <button class="btn-cancel" @click="emit('cancel')">x</button>
-      <BaseInput :modelValue="textNote" @textNoteModal="inputComponentAdd" />
-      <input
-        type="color"
-        class="selection-color"
-        @input="colorSelection"
-        v-model="localEditColor"
-      />
+      <BaseInput :modelValue="textNote" @textAndColor="inputComponentAdd" />
       <BaseButton class="btn-new-note" @click="addNewNote" :title="titleText" />
     </div>
   </div>
+  <div>{{ textNote }}</div>
 </template>
 
 <script setup>
@@ -22,32 +17,24 @@ const props = defineProps({
   numberIndex: {
     type: Number,
   },
-  editColor: {
-    type: String,
-  },
 });
 
-const emit = defineEmits(["cancel", "success", "color"]);
-
-const localEditColor = ref(props.editColor);
+const emit = defineEmits(["cancel", "success"]);
 
 const textNote = ref(props.textValue);
 
 const inputComponentAdd = (value) => {
-  textNote.value = value;
+  textNote.value.title = props.textValue;
+  textNote.value.bgColor = value.bgColor;
 };
 const addNewNote = () => {
   emit("success", textNote.value);
-  textNote.value = "";
+  textNote.value = { title: "", bgColor: "" };
 };
 
 const titleText = computed(() => {
   return typeof props.numberIndex === "number" ? "Сохранить" : "Добавить";
 });
-
-const colorSelection = (evt) => {
-  emit("color", localEditColor.value);
-};
 </script>
 
 <style>
@@ -79,13 +66,5 @@ const colorSelection = (evt) => {
 .btn-new-note {
   margin-left: calc(50% - 60px);
   margin-top: 20px;
-}
-.selection-color {
-  width: 150px;
-  height: 50px;
-  border-radius: 110px;
-  margin-left: calc(50% - 75px);
-  margin-top: 20px;
-  padding: 0px;
 }
 </style>
