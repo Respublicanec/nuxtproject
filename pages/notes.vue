@@ -20,6 +20,12 @@
       >
         Ваши заметки
       </h1>
+
+      Фильтровать по:
+      <select v-model="selectedFilter">
+        <option value="name">Названию</option>
+        <option value="colors">Цвету</option>
+      </select>
       <div>
         <ModalEditCreateNote
           v-if="visibilitiModal"
@@ -31,12 +37,13 @@
       </div>
       <ul class="list">
         <li
-          v-for="(note, index) in notes"
+          v-for="(note, index) in filteredNotes"
           :key="index"
           class="note"
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
+            <input type="checkbox" v-model="favorites" />
             <button @click="editNote(index)">edit</button>
             <button class="btn" @click="deleteNote(index)">x</button>
           </div>
@@ -120,6 +127,18 @@ const deleteNote = (index) => {
   saveNotes();
 };
 
+const selectedFilter = ref("");
+
+const filteredNotes = computed(() => {
+  let filtered = notes.value;
+
+  if (selectedFilter.value === "name") {
+    filtered = filtered.sort((a, b) => a.title.localeCompare(b.title));
+  } else if (selectedFilter.value === "colors") {
+    filtered = filtered.sort((a, b) => a.bgColor.localeCompare(b.bgColor));
+  }
+  return filtered;
+});
 onMounted(loadNotes);
 </script>
 
