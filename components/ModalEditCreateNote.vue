@@ -2,7 +2,8 @@
   <div>
     <div class="modal">
       <button class="btn-cancel" @click="emit('cancel')">x</button>
-      <FormNote :modelValue="textNote" @textAndColor="inputComponentAdd" />
+      <FormNote :modelValue="textNote" type="text" />
+      <FormNote :modelValue="textNote" type="color" />
       <BaseButton class="btn-new-note" @click="addNewNote" :title="titleText" />
     </div>
   </div>
@@ -21,11 +22,6 @@ const props = defineProps({
 const emit = defineEmits(["cancel", "success"]);
 
 const textNote = ref(props.textValue);
-
-const inputComponentAdd = (value) => {
-  textNote.value.title = props.textValue;
-  textNote.value.bgColor = value.bgColor;
-};
 const addNewNote = () => {
   emit("success", textNote.value);
   textNote.value = { title: "", bgColor: "" };

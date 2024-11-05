@@ -1,39 +1,39 @@
 <template>
   <div>
     <input
-      :class="['just-input', { colorChangeInput }]"
-      placeholder="Введитетекст заметки"
-      :value="inputData.title"
+      :class="['just-input', { colorChangeInput: props.type === 'color' }]"
+      placeholder="Введите текст заметки"
+      :value="props.type === 'color' ? inputData.bgColor : inputData.title"
       @input="oneChange"
-    />
-    <input
-      type="color"
-      :class="['just-input', 'input-color', { colorChangeInput }]"
-      :value="inputData.bgColor"
-      @input="dataNote"
+      :type="props.type"
     />
   </div>
 </template>
 
 <script setup>
-const emit = defineEmits(["textNoteModal", "color"]);
+const emit = defineEmits(["textNoteModal"]);
 
 const props = defineProps({
   modelValue: {
+    type: Object,
+  },
+  type: {
     type: String,
-    default: "",
+    default: "text",
+    validator: (value) => {
+      return ["color", "text"].includes(value);
+    },
   },
 });
 
 const inputData = ref(props.modelValue);
 
 const oneChange = (evt) => {
-  inputData.value.title = evt.target.value;
-  emit("textNoteModal", inputData.value);
-};
-
-const dataNote = (evt) => {
-  inputData.value.bgColor = evt.target.value;
+  if (props.type === "color") {
+    inputData.value.bgColor = evt.target.value;
+  } else {
+    inputData.value.title = evt.target.value;
+  }
   emit("textNoteModal", inputData.value);
 };
 </script>
@@ -49,14 +49,16 @@ const dataNote = (evt) => {
   border: 3px solid #505b60;
 }
 .colorChangeInput {
+  margin-left: 105px;
+  margin-top: 10px;
   border: 2px solid #000000;
+  height: 40px;
+  width: 100px;
+  padding: 0px;
+  border-radius: 10px;
 }
 .just-input:focus {
   border-width: 3px;
   border-color: #000000;
-}
-.input-color {
-  height: 40px;
-  padding: 0px;
 }
 </style>

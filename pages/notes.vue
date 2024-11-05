@@ -43,7 +43,11 @@
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
-            <input type="checkbox" v-model="favorites" />
+            <!-- <input
+              type="checkbox"
+              v-model="note.favorite"
+              @change="choiceFavorites(index)"
+            /> -->
             <button @click="editNote(index)">edit</button>
             <button class="btn" @click="deleteNote(index)">x</button>
           </div>
@@ -75,6 +79,7 @@ const saveNotes = () => {
 const defaultValue = ref({
   title: "",
   bgColor: "#ffffff",
+  favorite: "false",
 });
 
 const editNoteIndex = ref(null);
@@ -88,7 +93,7 @@ const editNote = (index) => {
 
 const titleNoteValue = ref("");
 
-const notes = ref([{ title: "Заметка 1", bgColor: "" }]);
+const notes = ref([{ title: "Заметка 1", bgColor: "", favorite: "false" }]);
 
 const visibilitiModal = ref(false);
 
@@ -110,6 +115,7 @@ const handleNewNotes = (note) => {
     notes.value.push({
       title: note.title,
       bgColor: note.bgColor,
+      favorite: false,
     });
   }
 
@@ -117,6 +123,7 @@ const handleNewNotes = (note) => {
   editNoteIndex.value = null;
   defaultValue.value.title = "";
   defaultValue.value.bgColor = "#ffffff";
+  defaultValue.value.favorite = false;
   saveNotes();
 };
 
@@ -130,15 +137,30 @@ const deleteNote = (index) => {
 const selectedFilter = ref("");
 
 const filteredNotes = computed(() => {
-  let filtered = notes.value;
+  let filtered = notes.value.slice();
+
+  let localFavorite = filtered.filter((note) => note.favorite === true);
+
+  let nonFavorite = filtered.filter((note) => note.favorite !== true);
 
   if (selectedFilter.value === "name") {
-    filtered = filtered.sort((a, b) => a.title.localeCompare(b.title));
+    localFavorite.sort((a, b) => a.title.localeCompare(b.title));
+    nonFavorite.sort((a, b) => a.title.localeCompare(b.title));
   } else if (selectedFilter.value === "colors") {
-    filtered = filtered.sort((a, b) => a.bgColor.localeCompare(b.bgColor));
+    localFavorite.sort((a, b) => a.bgColor.localeCompare(b.bgColor));
+    nonFavorite.sort((a, b) => a.bgColor.localeCompare(b.bgColor));
   }
+
+  filtered = [...localFavorite, ...nonFavorite];
+
   return filtered;
 });
+
+const choiceFavorites = (index) => {
+  notes.value[index].favorite = !notes.value[index].favorite;
+  saveNotes();
+};
+
 onMounted(loadNotes);
 </script>
 
