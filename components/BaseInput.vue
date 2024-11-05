@@ -11,11 +11,11 @@
 </template>
 
 <script setup>
-const emit = defineEmits(["textNoteModal"]);
+const emit = defineEmits(["textNoteModal1"]);
 
 const props = defineProps({
   modelValue: {
-    type: Object,
+    type: String,
   },
   type: {
     type: String,
@@ -29,12 +29,7 @@ const props = defineProps({
 const inputData = ref(props.modelValue);
 
 const oneChange = (evt) => {
-  if (props.type === "color") {
-    inputData.value.bgColor = evt.target.value;
-  } else {
-    inputData.value.title = evt.target.value;
-  }
-  emit("textNoteModal", inputData.value);
+  emit("update:modelValue", evt.target.value);
 };
 </script>
 
