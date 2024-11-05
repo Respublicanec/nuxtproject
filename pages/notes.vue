@@ -20,6 +20,12 @@
       >
         Ваши заметки
       </h1>
+
+      Фильтровать по:
+      <select v-model="selectedFilter">
+        <option value="name">Названию</option>
+        <option value="colors">Цвету</option>
+      </select>
       <div>
         <ModalEditCreateNote
           v-if="visibilitiModal"
@@ -29,15 +35,19 @@
           :numberIndex="editNoteIndex"
         />
       </div>
-
       <ul class="list">
         <li
-          v-for="(note, index) in notes"
+          v-for="(note, index) in filteredNotes"
           :key="index"
           class="note"
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
+            <!-- <input
+              type="checkbox"
+              v-model="note.favorite"
+              @change="choiceFavorites(index)"
+            /> -->
             <button @click="editNote(index)">edit</button>
             <button class="btn" @click="deleteNote(index)">x</button>
           </div>
@@ -52,7 +62,6 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
-  <div>{{ editNoteIndex }}</div>
 </template>
 
 <script setup>
@@ -67,35 +76,32 @@ const saveNotes = () => {
   localStorage.setItem("notes", JSON.stringify(notes.value));
 };
 
-const defaultValue = ref();
+const defaultValue = ref({
+  title: "",
+  bgColor: "#ffffff",
+  favorite: "false",
+});
 
 const editNoteIndex = ref(null);
 
 const editNote = (index) => {
   editNoteIndex.value = index;
-  defaultValue.value = notes.value[index].title;
+  defaultValue.value.title = notes.value[index].title;
+  defaultValue.value.bgColor = notes.value[index].bgColor;
   visibilitiModal.value = true;
 };
 
 const titleNoteValue = ref("");
 
-const notes = ref([{ title: "Заметка 1", bgColor: "" }]);
+const notes = ref([{ title: "Заметка 1", bgColor: "", favorite: "false" }]);
 
 const visibilitiModal = ref(false);
 
 const cancelModal = () => {
   visibilitiModal.value = false;
   editNoteIndex.value = null;
-  defaultValue.value = "";
-};
-
-const getRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+  defaultValue.value.title = "";
+  defaultValue.value.bgColor = "#ffffff";
 };
 
 const handleNewNotes = (note) => {
@@ -103,17 +109,21 @@ const handleNewNotes = (note) => {
     editNoteIndex.value !== null &&
     editNoteIndex.value < notes.value.length
   ) {
-    notes.value[editNoteIndex.value].title = note;
+    notes.value[editNoteIndex.value].title = note.title;
+    notes.value[editNoteIndex.value].bgColor = note.bgColor;
   } else {
     notes.value.push({
-      title: note,
-      bgColor: getRandomColor(),
+      title: note.title,
+      bgColor: note.bgColor,
+      favorite: false,
     });
   }
 
   visibilitiModal.value = false;
   editNoteIndex.value = null;
-  defaultValue.value = "";
+  defaultValue.value.title = "";
+  defaultValue.value.bgColor = "#ffffff";
+  defaultValue.value.favorite = false;
   saveNotes();
 };
 
@@ -121,6 +131,33 @@ const noteCount = computed(() => notes.value.length);
 
 const deleteNote = (index) => {
   notes.value.splice(index, 1);
+  saveNotes();
+};
+
+const selectedFilter = ref("");
+
+const filteredNotes = computed(() => {
+  let filtered = notes.value.slice();
+
+  let localFavorite = filtered.filter((note) => note.favorite === true);
+
+  let nonFavorite = filtered.filter((note) => note.favorite !== true);
+
+  if (selectedFilter.value === "name") {
+    localFavorite.sort((a, b) => a.title.localeCompare(b.title));
+    nonFavorite.sort((a, b) => a.title.localeCompare(b.title));
+  } else if (selectedFilter.value === "colors") {
+    localFavorite.sort((a, b) => a.bgColor.localeCompare(b.bgColor));
+    nonFavorite.sort((a, b) => a.bgColor.localeCompare(b.bgColor));
+  }
+
+  filtered = [...localFavorite, ...nonFavorite];
+
+  return filtered;
+});
+
+const choiceFavorites = (index) => {
+  notes.value[index].favorite = !notes.value[index].favorite;
   saveNotes();
 };
 

@@ -2,7 +2,15 @@
   <div>
     <div class="modal">
       <button class="btn-cancel" @click="emit('cancel')">x</button>
-      <BaseInput :modelValue="textNote" @textNoteModal="inputComponentAdd" />
+      <BaseInput
+        :modelValue="textNote.title"
+        @update:modelValue="emitTextBaseInput"
+      />
+      <BaseInput
+        :modelValue="textNote.bgColor"
+        type="color"
+        @update:modelValue="emitColorBaseInput"
+      />
       <BaseButton class="btn-new-note" @click="addNewNote" :title="titleText" />
     </div>
   </div>
@@ -11,7 +19,8 @@
 <script setup>
 const props = defineProps({
   textValue: {
-    type: String,
+    type: Object,
+    default: () => ({ title: "", bgColor: "" }),
   },
   numberIndex: {
     type: Number,
@@ -22,17 +31,21 @@ const emit = defineEmits(["cancel", "success"]);
 
 const textNote = ref(props.textValue);
 
-const inputComponentAdd = (value) => {
-  textNote.value = value;
-};
 const addNewNote = () => {
   emit("success", textNote.value);
-  textNote.value = "";
+  textNote.value = { title: "", bgColor: "" };
 };
 
 const titleText = computed(() => {
-  return !props.numberIndex === "" ? "Сохранить" : "Добавить";
+  return typeof props.numberIndex === "number" ? "Сохранить" : "Добавить";
 });
+
+const emitTextBaseInput = (add) => {
+  textNote.value.title = add;
+};
+const emitColorBaseInput = (add) => {
+  textNote.value.bgColor = add;
+};
 </script>
 
 <style>
@@ -62,7 +75,7 @@ const titleText = computed(() => {
 }
 
 .btn-new-note {
-  margin-left: calc(50% - 70px);
-  margin-top: 40px;
+  margin-left: calc(50% - 60px);
+  margin-top: 20px;
 }
 </style>
