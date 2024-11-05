@@ -30,6 +30,7 @@ const props = defineProps({
 const emit = defineEmits(["cancel", "success"]);
 
 const textNote = ref(props.textValue);
+// const textNote = ref(props.textValue);
 
 const addNewNote = () => {
   emit("success", textNote.value);

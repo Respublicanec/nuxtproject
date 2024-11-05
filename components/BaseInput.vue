@@ -3,15 +3,16 @@
     <input
       :class="['just-input', { colorChangeInput: props.type === 'color' }]"
       placeholder="Введите текст заметки"
-      :value="props.type === 'color' ? inputData.bgColor : inputData.title"
+      :value="modelValue"
       @input="oneChange"
       :type="props.type"
     />
   </div>
+  <div>{{ modelValue }}</div>
 </template>
 
 <script setup>
-const emit = defineEmits(["textNoteModal1"]);
+const emit = defineEmits([""]);
 
 const props = defineProps({
   modelValue: {
