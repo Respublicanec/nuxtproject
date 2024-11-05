@@ -4,7 +4,6 @@
       <button class="btn-cancel" @click="emit('cancel')">x</button>
       <BaseInput
         :modelValue="textNote.title"
-        type="text"
         @update:modelValue="emitTextBaseInput"
       />
       <BaseInput
@@ -15,13 +14,13 @@
       <BaseButton class="btn-new-note" @click="addNewNote" :title="titleText" />
     </div>
   </div>
-  <div>{{ textNote }}</div>
 </template>
 
 <script setup>
 const props = defineProps({
   textValue: {
-    type: String,
+    type: Object,
+    default: () => ({ title: "", bgColor: "" }),
   },
   numberIndex: {
     type: Number,

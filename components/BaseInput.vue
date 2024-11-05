@@ -8,7 +8,6 @@
       :type="props.type"
     />
   </div>
-  <div>{{ modelValue }}</div>
 </template>
 
 <script setup>
