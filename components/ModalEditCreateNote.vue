@@ -2,8 +2,8 @@
   <div>
     <div class="modal">
       <button class="btn-cancel" @click="emit('cancel')">x</button>
-      <FormNote :modelValue="textNote" type="text" />
-      <FormNote :modelValue="textNote" type="color" />
+      <BaseInput :modelValue="textNote" type="text" />
+      <BaseInput :modelValue="textNote" type="color" />
       <BaseButton class="btn-new-note" @click="addNewNote" :title="titleText" />
     </div>
   </div>
