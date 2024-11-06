@@ -8,6 +8,7 @@
       :type="props.type"
     />
   </div>
+  <div>{{}}</div>
 </template>
 
 <script setup>
