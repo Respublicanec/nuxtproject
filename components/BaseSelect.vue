@@ -1,6 +1,6 @@
 <template>
   <div>
-    <select v-model="readyVarian" value="n2" @change="emitReadyVarian">
+    <select :value="modelValue" @input="emitReadyVarian">
       <option
         v-for="(option, index) in optionsBase"
         :key="index"
@@ -12,10 +12,10 @@
   </div>
 </template>
 <script setup>
-const emit = defineEmits(["update:acceptedOption"]);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
-  acceptedOption: {
+  modelValue: {
     type: String,
   },
   optionsBase: {
@@ -23,11 +23,7 @@ const props = defineProps({
   },
 });
 
-const readyVarian = ref(props.acceptedOption);
-
-console.log(props.optionsBase);
-
-const emitReadyVarian = () => {
-  emit("update:acceptedOption", readyVarian.value);
+const emitReadyVarian = (val) => {
+  emit("update:modelValue", val.target.value);
 };
 </script>
