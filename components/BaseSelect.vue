@@ -1,24 +1,33 @@
 <template>
   <div>
-    <select v-model="readyVarian" @change="emitReadyVarian">
-      <option v-for="key in optionsBase">{{ key }}</option>
+    <select v-model="readyVarian" value="n2" @change="emitReadyVarian">
+      <option
+        v-for="(option, index) in optionsBase"
+        :key="index"
+        :value="option"
+      >
+        {{ option }}
+      </option>
     </select>
   </div>
 </template>
 <script setup>
-const emit = defineEmits(["readyVarian"]);
+const emit = defineEmits(["update:acceptedOption"]);
 
 const props = defineProps({
-  sendingOption: {
-    type: Object,
+  acceptedOption: {
+    type: String,
+  },
+  optionsBase: {
+    type: Array,
   },
 });
 
-const optionsBase = ref(props.sendingOption);
+const readyVarian = ref(props.acceptedOption);
 
-const readyVarian = ref();
+console.log(props.optionsBase);
 
 const emitReadyVarian = () => {
-  emit("readyVarian", readyVarian.value);
+  emit("update:acceptedOption", readyVarian.value);
 };
 </script>
