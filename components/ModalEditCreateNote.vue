@@ -2,15 +2,8 @@
   <div>
     <div class="modal">
       <button class="btn-cancel" @click="emit('cancel')">x</button>
-      <BaseInput
-        :modelValue="textNote.title"
-        @update:modelValue="emitTextBaseInput"
-      />
-      <BaseInput
-        :modelValue="textNote.bgColor"
-        type="color"
-        @update:modelValue="emitColorBaseInput"
-      />
+      <BaseInput v-model="textNote.title" />
+      <BaseInput v-model="textNote.bgColor" type="color" />
       <BaseButton class="btn-new-note" @click="addNewNote" :title="titleText" />
     </div>
   </div>
@@ -39,13 +32,6 @@ const addNewNote = () => {
 const titleText = computed(() => {
   return typeof props.numberIndex === "number" ? "Сохранить" : "Добавить";
 });
-
-const emitTextBaseInput = (add) => {
-  textNote.value.title = add;
-};
-const emitColorBaseInput = (add) => {
-  textNote.value.bgColor = add;
-};
 </script>
 
 <style>

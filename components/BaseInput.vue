@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-const emit = defineEmits([""]);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
   modelValue: {
@@ -25,8 +25,6 @@ const props = defineProps({
     },
   },
 });
-
-const inputData = ref(props.modelValue);
 
 const oneChange = (evt) => {
   emit("update:modelValue", evt.target.value);
