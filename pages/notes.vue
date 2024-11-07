@@ -43,15 +43,13 @@
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
-            <!-- <input
-              type="checkbox"
-              v-model="note.favorite"
-              @change="choiceFavorites(index)"
-            /> -->
             <button @click="editNote(index)">edit</button>
             <button class="btn" @click="deleteNote(index)">x</button>
           </div>
-          <span class="text"> {{ note.title }}</span>
+          <span>
+            {{ note.title }}
+            <div class="date">{{ note.date }}</div>
+          </span>
         </li>
       </ul>
 
@@ -62,6 +60,7 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
+  <div>{{ currentDate }}</div>
 </template>
 
 <script setup>
@@ -105,6 +104,19 @@ const cancelModal = () => {
 };
 
 const handleNewNotes = (note) => {
+  const currentDate = new Date();
+
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1;
+  const year = currentDate.getFullYear();
+  const hours = currentDate.getHours();
+  const minutes = currentDate.getMinutes();
+  const seconds = currentDate.getSeconds();
+
+  const formattedDate = ref(
+    `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`
+  );
+
   if (
     editNoteIndex.value !== null &&
     editNoteIndex.value < notes.value.length
@@ -116,6 +128,7 @@ const handleNewNotes = (note) => {
       title: note.title,
       bgColor: note.bgColor,
       favorite: false,
+      date: formattedDate,
     });
   }
 
@@ -235,14 +248,11 @@ onMounted(loadNotes);
 .contButton {
   text-align: right;
 }
-
-.text {
-  display: grid;
-  grid-row-start: 3;
-}
-
 .btn {
   width: 25px;
   height: 25px;
+}
+.date {
+  text-align: right;
 }
 </style>
