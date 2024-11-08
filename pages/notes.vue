@@ -43,15 +43,13 @@
           :style="{ backgroundColor: note.bgColor }"
         >
           <div class="contButton">
-            <!-- <input
-              type="checkbox"
-              v-model="note.favorite"
-              @change="choiceFavorites(index)"
-            /> -->
             <button @click="editNote(index)">edit</button>
             <button class="btn" @click="deleteNote(index)">x</button>
           </div>
-          <span class="text"> {{ note.title }}</span>
+          <span>
+            {{ note.title }}
+            <div class="date">{{ formatDate(note.date) }}</div>
+          </span>
         </li>
       </ul>
 
@@ -65,6 +63,7 @@
 </template>
 
 <script setup>
+import { formatDate } from "@/utils/common";
 const loadNotes = () => {
   const storedNotes = localStorage.getItem("notes");
   if (storedNotes) {
@@ -93,7 +92,7 @@ const editNote = (index) => {
 
 const titleNoteValue = ref("");
 
-const notes = ref([{ title: "Заметка 1", bgColor: "", favorite: "false" }]);
+const notes = ref([{}]);
 
 const visibilitiModal = ref(false);
 
@@ -116,6 +115,7 @@ const handleNewNotes = (note) => {
       title: note.title,
       bgColor: note.bgColor,
       favorite: false,
+      date: new Date().toISOString(),
     });
   }
 
@@ -126,7 +126,6 @@ const handleNewNotes = (note) => {
   defaultValue.value.favorite = false;
   saveNotes();
 };
-
 const noteCount = computed(() => notes.value.length);
 
 const deleteNote = (index) => {
@@ -235,14 +234,11 @@ onMounted(loadNotes);
 .contButton {
   text-align: right;
 }
-
-.text {
-  display: grid;
-  grid-row-start: 3;
-}
-
 .btn {
   width: 25px;
   height: 25px;
+}
+.date {
+  text-align: right;
 }
 </style>
