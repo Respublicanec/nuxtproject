@@ -48,7 +48,7 @@
           </div>
           <span>
             {{ note.title }}
-            <div class="date">{{ note.date }}</div>
+            <div class="date">{{ outputDate(note) }}</div>
           </span>
         </li>
       </ul>
@@ -103,19 +103,15 @@ const cancelModal = () => {
   defaultValue.value.bgColor = "#ffffff";
 };
 
+const currentDate = ref();
+
+const updateDate = () => {
+  currentDate.value = new Date();
+};
+
 const handleNewNotes = (note) => {
-  const currentDate = new Date();
-
-  const day = currentDate.getDate();
-  const month = currentDate.getMonth() + 1;
-  const year = currentDate.getFullYear();
-  const hours = currentDate.getHours();
-  const minutes = currentDate.getMinutes();
-  const seconds = currentDate.getSeconds();
-
-  const formattedDate = ref(
-    `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`
-  );
+  updateDate();
+  const formattedDate = ref(currentDate.toISOString());
 
   if (
     editNoteIndex.value !== null &&
@@ -138,6 +134,11 @@ const handleNewNotes = (note) => {
   defaultValue.value.bgColor = "#ffffff";
   defaultValue.value.favorite = false;
   saveNotes();
+};
+
+const outputDate = (note) => {
+  const add = note.date;
+  return add;
 };
 
 const noteCount = computed(() => notes.value.length);
