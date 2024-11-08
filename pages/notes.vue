@@ -103,16 +103,7 @@ const cancelModal = () => {
   defaultValue.value.bgColor = "#ffffff";
 };
 
-const currentDate = ref();
-
-const updateDate = () => {
-  currentDate.value = new Date();
-};
-
 const handleNewNotes = (note) => {
-  updateDate();
-  const formattedDate = ref(currentDate.toISOString());
-
   if (
     editNoteIndex.value !== null &&
     editNoteIndex.value < notes.value.length
@@ -124,7 +115,7 @@ const handleNewNotes = (note) => {
       title: note.title,
       bgColor: note.bgColor,
       favorite: false,
-      date: formattedDate,
+      date: new Date().toISOString(),
     });
   }
 
@@ -137,7 +128,13 @@ const handleNewNotes = (note) => {
 };
 
 const outputDate = (note) => {
-  const add = note.date;
+  const dataNote = new Date(note.date);
+  const day = dataNote.getUTCDate();
+  const month = dataNote.getUTCMonth() + 1;
+  const year = dataNote.getUTCFullYear();
+  const hours = dataNote.getUTCHours();
+  const minutes = dataNote.getUTCMinutes();
+  const add = `${year}.${month}.${day} ${hours}:${minutes} `;
   return add;
 };
 
