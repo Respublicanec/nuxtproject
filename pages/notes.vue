@@ -48,7 +48,7 @@
           </div>
           <span>
             {{ note.title }}
-            <div class="date">{{ outputDate(note) }}</div>
+            <div class="date">{{ formatDate(note.date) }}</div>
           </span>
         </li>
       </ul>
@@ -60,10 +60,10 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
-  <div>{{ currentDate }}</div>
 </template>
 
 <script setup>
+import { formatDate } from "@/utils/common";
 const loadNotes = () => {
   const storedNotes = localStorage.getItem("notes");
   if (storedNotes) {
@@ -92,7 +92,7 @@ const editNote = (index) => {
 
 const titleNoteValue = ref("");
 
-const notes = ref([{ title: "Заметка 1", bgColor: "", favorite: "false" }]);
+const notes = ref([{}]);
 
 const visibilitiModal = ref(false);
 
@@ -126,18 +126,6 @@ const handleNewNotes = (note) => {
   defaultValue.value.favorite = false;
   saveNotes();
 };
-
-const outputDate = (note) => {
-  const dataNote = new Date(note.date);
-  const day = dataNote.getUTCDate();
-  const month = dataNote.getUTCMonth() + 1;
-  const year = dataNote.getUTCFullYear();
-  const hours = dataNote.getUTCHours();
-  const minutes = dataNote.getUTCMinutes();
-  const add = `${year}.${month}.${day} ${hours}:${minutes} `;
-  return add;
-};
-
 const noteCount = computed(() => notes.value.length);
 
 const deleteNote = (index) => {
