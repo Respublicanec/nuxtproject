@@ -6,17 +6,6 @@ export function formatDate(date) {
   const hours = dataNote.getUTCHours();
   const minutes = dataNote.getUTCMinutes();
   const seconds = dataNote.getUTCSeconds();
-  const add =
-    dataNote.getUTCFullYear() +
-    "." +
-    dataNote.getUTCMonth() +
-    "." +
-    dataNote.getUTCDate() +
-    " " +
-    dataNote.getUTCHours() +
-    ":" +
-    dataNote.getUTCMinutes() +
-    ":" +
-    dataNote.getUTCSeconds();
+
   return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
 }
