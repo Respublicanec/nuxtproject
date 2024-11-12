@@ -1,6 +1,6 @@
 <template>
   <li class="note" :style="{ backgroundColor: note.bgColor }">
-    <div class="contButton">
+    <div class="EditingButton">
       <button @click="editNote(index)">edit</button>
       <button class="btn" @click="deleteNote(index)">x</button>
     </div>
@@ -29,7 +29,7 @@ const editNote = (index) => {
 </script>
 
 <style>
-.contButton,
+.EditingButton,
 .date {
   text-align: right;
 }
