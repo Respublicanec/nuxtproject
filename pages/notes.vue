@@ -36,21 +36,12 @@
         />
       </div>
       <ul class="list">
-        <li
+        <Note
           v-for="(note, index) in filteredNotes"
-          :key="index"
-          class="note"
-          :style="{ backgroundColor: note.bgColor }"
-        >
-          <div class="contButton">
-            <button @click="editNote(index)">edit</button>
-            <button class="btn" @click="deleteNote(index)">x</button>
-          </div>
-          <span>
-            {{ note.title }}
-            <div class="date">{{ formatDate(note.date) }}</div>
-          </span>
-        </li>
+          @deleteNote="deleteNote(index)"
+          @editNote="editNote(index)"
+          :note="note"
+        />
       </ul>
 
       <div v-if="noteCount === 0">Заметок пока нет</div>
@@ -63,7 +54,6 @@
 </template>
 
 <script setup>
-import { formatDate } from "@/utils/common";
 const loadNotes = () => {
   const storedNotes = localStorage.getItem("notes");
   if (storedNotes) {
@@ -130,6 +120,7 @@ const noteCount = computed(() => notes.value.length);
 
 const deleteNote = (index) => {
   notes.value.splice(index, 1);
+  console.log(index);
   saveNotes();
 };
 
@@ -223,22 +214,8 @@ onMounted(loadNotes);
   }
 }
 
-.note {
-  display: grid;
-  width: auto;
-  text-align: center;
-  max-width: auto;
-  border: 2px solid rgb(165, 165, 175);
-}
-
-.contButton {
-  text-align: right;
-}
 .btn {
   width: 25px;
   height: 25px;
-}
-.date {
-  text-align: right;
 }
 </style>
