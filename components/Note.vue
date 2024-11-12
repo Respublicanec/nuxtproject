@@ -29,20 +29,9 @@ const editNote = (index) => {
 </script>
 
 <style>
+.contButton,
+.date,
 .contButton {
   text-align: right;
-}
-.date {
-  text-align: right;
-}
-.contButton {
-  text-align: right;
-}
-.note {
-  display: grid;
-  width: auto;
-  text-align: center;
-  max-width: auto;
-  border: 2px solid rgb(165, 165, 175);
 }
 </style>

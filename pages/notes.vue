@@ -36,13 +36,13 @@
         />
       </div>
       <ul class="list">
-        <li v-for="(note, index) in filteredNotes" class="note">
+        <div v-for="(note, index) in filteredNotes" class="note">
           <Note
             @deleteNote="deleteNote(index)"
             @editNote="editNote(index)"
             :note="note"
           />
-        </li>
+        </div>
       </ul>
 
       <div v-if="noteCount === 0">Заметок пока нет</div>
@@ -223,14 +223,8 @@ onMounted(loadNotes);
   border: 2px solid rgb(165, 165, 175);
 }
 
-.contButton {
-  text-align: right;
-}
 .btn {
   width: 25px;
   height: 25px;
-}
-.date {
-  text-align: right;
 }
 </style>
