@@ -1,8 +1,8 @@
 <template>
   <li class="note" :style="{ backgroundColor: note.bgColor }">
     <div class="editing-button">
-      <button @click="editNote(index)">edit</button>
-      <button class="btn" @click="deleteNote(index)">x</button>
+      <button @click="editNote">edit</button>
+      <button class="btn" @click="deleteNote">x</button>
     </div>
     <span>
       {{ note.title }}
@@ -19,12 +19,12 @@ const props = defineProps({
 
 const emit = defineEmits(["editNote", "deleteNote"]);
 
-const deleteNote = (index) => {
-  emit("deleteNote", index);
+const deleteNote = () => {
+  emit("deleteNote");
 };
 
-const editNote = (index) => {
-  emit("editNote", index);
+const editNote = () => {
+  emit("editNote");
 };
 </script>
 
