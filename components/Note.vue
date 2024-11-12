@@ -1,21 +1,18 @@
 <template>
-  <li class="note" :style="{ backgroundColor: filteredNotes[index].bgColor }">
+  <li class="note" :style="{ backgroundColor: note.bgColor }">
     <div class="contButton">
       <button @click="editNote(index)">edit</button>
       <button class="btn" @click="deleteNote(index)">x</button>
     </div>
     <span>
-      {{ filteredNotes[index].title }}
-      <div class="date">{{ formatDate(filteredNotes[index].date) }}</div>
+      {{ note.title }}
+      <div class="date">{{ formatDate(note.date) }}</div>
     </span>
   </li>
 </template>
 <script setup>
 const props = defineProps({
-  index: {
-    type: Number,
-  },
-  filteredNotes: {
+  note: {
     type: Object,
   },
 });

@@ -36,12 +36,11 @@
         />
       </div>
       <ul class="list">
-        <li v-for="(note, index) in filteredNotes" :key="index" class="note">
+        <li v-for="(note, index) in filteredNotes" class="note">
           <Note
             @deleteNote="deleteNote(index)"
             @editNote="editNote(index)"
-            :filteredNotes="filteredNotes"
-            :index="index"
+            :note="note"
           />
         </li>
       </ul>
