@@ -30,8 +30,7 @@ const editNote = (index) => {
 
 <style>
 .contButton,
-.date,
-.contButton {
+.date {
   text-align: right;
 }
 </style>
