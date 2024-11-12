@@ -36,13 +36,12 @@
         />
       </div>
       <ul class="list">
-        <div v-for="(note, index) in filteredNotes" class="note">
-          <Note
-            @deleteNote="deleteNote(index)"
-            @editNote="editNote(index)"
-            :note="note"
-          />
-        </div>
+        <Note
+          v-for="(note, index) in filteredNotes"
+          @deleteNote="deleteNote(index)"
+          @editNote="editNote(index)"
+          :note="note"
+        />
       </ul>
 
       <div v-if="noteCount === 0">Заметок пока нет</div>
@@ -213,14 +212,6 @@ onMounted(loadNotes);
   .list {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-
-.note {
-  display: grid;
-  width: auto;
-  text-align: center;
-  max-width: auto;
-  border: 2px solid rgb(165, 165, 175);
 }
 
 .btn {
