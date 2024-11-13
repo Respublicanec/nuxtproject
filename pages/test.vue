@@ -1,6 +1,7 @@
 <template>
   <BaseSelect v-model="acceptedOption" :optionsBase="options"></BaseSelect>
   <div>Выбранный вариант: {{ acceptedOption }}</div>
+  {{ titles }}
 </template>
 
 <script setup>

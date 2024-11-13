@@ -20,12 +20,8 @@
       >
         Ваши заметки
       </h1>
-
       Фильтровать по:
-      <select v-model="selectedFilter">
-        <option value="name">Названию</option>
-        <option value="colors">Цвету</option>
-      </select>
+      <BaseSelect v-model="selectedFilter" :optionsBase="options"></BaseSelect>
       <div>
         <ModalEditCreateNote
           v-if="visibilitiModal"
@@ -124,32 +120,19 @@ const deleteNote = (index) => {
   saveNotes();
 };
 
-const selectedFilter = ref("");
+const options = ref(["dateAscending", "dateDescending"]);
+
+const selectedFilter = ref("dateAscending");
 
 const filteredNotes = computed(() => {
-  let filtered = notes.value.slice();
-
-  let localFavorite = filtered.filter((note) => note.favorite === true);
-
-  let nonFavorite = filtered.filter((note) => note.favorite !== true);
-
-  if (selectedFilter.value === "name") {
-    localFavorite.sort((a, b) => a.title.localeCompare(b.title));
-    nonFavorite.sort((a, b) => a.title.localeCompare(b.title));
-  } else if (selectedFilter.value === "colors") {
-    localFavorite.sort((a, b) => a.bgColor.localeCompare(b.bgColor));
-    nonFavorite.sort((a, b) => a.bgColor.localeCompare(b.bgColor));
+  console.log(11111111111111);
+  if (selectedFilter.value === "dateAscending") {
+    return [...notes.value].sort((a, b) => new Date(a.date) - new Date(b.date));
+  } else if (selectedFilter.value === "dateDescending") {
+    return [...notes.value].sort((a, b) => new Date(b.date) - new Date(a.date));
   }
-
-  filtered = [...localFavorite, ...nonFavorite];
-
-  return filtered;
+  return notes.value;
 });
-
-const choiceFavorites = (index) => {
-  notes.value[index].favorite = !notes.value[index].favorite;
-  saveNotes();
-};
 
 onMounted(loadNotes);
 </script>

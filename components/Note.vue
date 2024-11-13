@@ -9,9 +9,10 @@
       <div class="date">{{ formatDate(note.date) }}</div>
     </span>
   </li>
+  {{ titles }}
 </template>
 <script setup>
-const props = defineProps({
+defineProps({
   note: {
     type: Object,
   },
