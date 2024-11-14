@@ -51,7 +51,6 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
-  {{ notes }}
 </template>
 
 <script setup>
@@ -98,8 +97,6 @@ const cancelModal = () => {
   defaultValue.value.bgColor = "#ffffff";
 };
 
-const counterId = ref(0);
-
 const handleNewNotes = (note) => {
   if (
     editNoteIndex.value !== null &&
@@ -108,7 +105,6 @@ const handleNewNotes = (note) => {
     notes.value[editNoteIndex.value].title = note.title;
     notes.value[editNoteIndex.value].bgColor = note.bgColor;
   } else {
-    counterId.value++;
     notes.value.push({
       title: note.title,
       bgColor: note.bgColor,
