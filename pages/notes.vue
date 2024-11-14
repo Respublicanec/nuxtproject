@@ -20,12 +20,12 @@
       >
         Ваши заметки
       </h1>
-
       Фильтровать по:
-      <select v-model="selectedFilter">
-        <option value="name">Названию</option>
-        <option value="colors">Цвету</option>
-      </select>
+      <BaseSelect
+        :value="sd"
+        v-model="selectedFilter"
+        :optionsBase="options"
+      ></BaseSelect>
       <div>
         <ModalEditCreateNote
           v-if="visibilitiModal"
@@ -38,8 +38,8 @@
       <ul class="list">
         <Note
           v-for="(note, index) in filteredNotes"
-          @deleteNote="deleteNote(index)"
-          @editNote="editNote(index)"
+          @deleteNote="deleteNote(note.id)"
+          @editNote="editNote(note.id)"
           :note="note"
         />
       </ul>
@@ -68,15 +68,19 @@ const saveNotes = () => {
 const defaultValue = ref({
   title: "",
   bgColor: "#ffffff",
-  favorite: "false",
 });
 
 const editNoteIndex = ref(null);
 
-const editNote = (index) => {
-  editNoteIndex.value = index;
-  defaultValue.value.title = notes.value[index].title;
-  defaultValue.value.bgColor = notes.value[index].bgColor;
+const searchNote = (notes, id) => {
+  return notes.find((note) => note.id === id);
+};
+
+const editNote = (id) => {
+  const note = searchNote(notes.value, id);
+  defaultValue.value.title = note.title;
+  defaultValue.value.bgColor = note.bgColor;
+  editNoteIndex.value = notes.value.indexOf(note);
   visibilitiModal.value = true;
 };
 
@@ -104,8 +108,8 @@ const handleNewNotes = (note) => {
     notes.value.push({
       title: note.title,
       bgColor: note.bgColor,
-      favorite: false,
       date: new Date().toISOString(),
+      id: new Date().getTime(),
     });
   }
 
@@ -113,43 +117,31 @@ const handleNewNotes = (note) => {
   editNoteIndex.value = null;
   defaultValue.value.title = "";
   defaultValue.value.bgColor = "#ffffff";
-  defaultValue.value.favorite = false;
+
   saveNotes();
 };
 const noteCount = computed(() => notes.value.length);
 
-const deleteNote = (index) => {
-  notes.value.splice(index, 1);
-  console.log(index);
+const deleteNote = (id) => {
+  notes.value = notes.value.filter((note) => note.id !== id);
   saveNotes();
 };
+
+const options = ref([
+  { option: "dateAscending", name: "от старых к новым" },
+  { option: "dateDescending", name: "от новых к старым" },
+]);
 
 const selectedFilter = ref("");
 
 const filteredNotes = computed(() => {
-  let filtered = notes.value.slice();
-
-  let localFavorite = filtered.filter((note) => note.favorite === true);
-
-  let nonFavorite = filtered.filter((note) => note.favorite !== true);
-
-  if (selectedFilter.value === "name") {
-    localFavorite.sort((a, b) => a.title.localeCompare(b.title));
-    nonFavorite.sort((a, b) => a.title.localeCompare(b.title));
-  } else if (selectedFilter.value === "colors") {
-    localFavorite.sort((a, b) => a.bgColor.localeCompare(b.bgColor));
-    nonFavorite.sort((a, b) => a.bgColor.localeCompare(b.bgColor));
+  if (selectedFilter.value === "dateAscending") {
+    return [...notes.value].sort((a, b) => new Date(a.date) - new Date(b.date));
+  } else if (selectedFilter.value === "dateDescending") {
+    return [...notes.value].sort((a, b) => new Date(b.date) - new Date(a.date));
   }
-
-  filtered = [...localFavorite, ...nonFavorite];
-
-  return filtered;
+  return notes.value;
 });
-
-const choiceFavorites = (index) => {
-  notes.value[index].favorite = !notes.value[index].favorite;
-  saveNotes();
-};
 
 onMounted(loadNotes);
 </script>

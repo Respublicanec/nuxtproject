@@ -34,6 +34,7 @@ const oneChange = (evt) => {
 <style>
 .just-input {
   width: 200px;
+  height: 30px;
   margin-left: 50px;
   border: 2px solid #505b60;
   border-radius: 5px;
