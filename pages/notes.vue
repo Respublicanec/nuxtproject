@@ -51,6 +51,7 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
+  {{ notes }}
 </template>
 
 <script setup>
@@ -112,7 +113,7 @@ const handleNewNotes = (note) => {
       title: note.title,
       bgColor: note.bgColor,
       date: new Date().toISOString(),
-      id: formatDateMilliseconds(new Date()),
+      id: new Date().getTime(),
     });
   }
 

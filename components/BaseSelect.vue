@@ -15,7 +15,7 @@ const props = defineProps({
     type: String,
   },
   optionsBase: {
-    type: Object,
+    type: Array,
   },
 });
 
