@@ -21,7 +21,11 @@
         Ваши заметки
       </h1>
       Фильтровать по:
-      <BaseSelect v-model="selectedFilter" :optionsBase="options"></BaseSelect>
+      <BaseSelect
+        :value="sd"
+        v-model="selectedFilter"
+        :optionsBase="options"
+      ></BaseSelect>
       <div>
         <ModalEditCreateNote
           v-if="visibilitiModal"
@@ -34,8 +38,8 @@
       <ul class="list">
         <Note
           v-for="(note, index) in filteredNotes"
-          @deleteNote="deleteNote(index)"
-          @editNote="editNote(index)"
+          @deleteNote="deleteNote(note.id)"
+          @editNote="editNote(note.id)"
           :note="note"
         />
       </ul>
@@ -64,15 +68,19 @@ const saveNotes = () => {
 const defaultValue = ref({
   title: "",
   bgColor: "#ffffff",
-  favorite: "false",
 });
 
 const editNoteIndex = ref(null);
 
-const editNote = (index) => {
-  editNoteIndex.value = index;
-  defaultValue.value.title = notes.value[index].title;
-  defaultValue.value.bgColor = notes.value[index].bgColor;
+const searchNote = (notes, id) => {
+  return notes.find((note) => note.id === id);
+};
+
+const editNote = (id) => {
+  const note = searchNote(notes.value, id);
+  defaultValue.value.title = note.title;
+  defaultValue.value.bgColor = note.bgColor;
+  editNoteIndex.value = notes.value.indexOf(note);
   visibilitiModal.value = true;
 };
 
@@ -89,6 +97,8 @@ const cancelModal = () => {
   defaultValue.value.bgColor = "#ffffff";
 };
 
+const counterId = ref(0);
+
 const handleNewNotes = (note) => {
   if (
     editNoteIndex.value !== null &&
@@ -97,11 +107,12 @@ const handleNewNotes = (note) => {
     notes.value[editNoteIndex.value].title = note.title;
     notes.value[editNoteIndex.value].bgColor = note.bgColor;
   } else {
+    counterId.value++;
     notes.value.push({
       title: note.title,
       bgColor: note.bgColor,
-      favorite: false,
       date: new Date().toISOString(),
+      id: formatDateMilliseconds(new Date()),
     });
   }
 
@@ -109,23 +120,24 @@ const handleNewNotes = (note) => {
   editNoteIndex.value = null;
   defaultValue.value.title = "";
   defaultValue.value.bgColor = "#ffffff";
-  defaultValue.value.favorite = false;
+
   saveNotes();
 };
 const noteCount = computed(() => notes.value.length);
 
-const deleteNote = (index) => {
-  notes.value.splice(index, 1);
-  console.log(index);
+const deleteNote = (id) => {
+  notes.value = notes.value.filter((note) => note.id !== id);
   saveNotes();
 };
 
-const options = ref(["dateAscending", "dateDescending"]);
+const options = ref([
+  { option: "dateAscending", name: "от старых к новым" },
+  { option: "dateDescending", name: "от новых к старым" },
+]);
 
-const selectedFilter = ref("dateAscending");
+const selectedFilter = ref("");
 
 const filteredNotes = computed(() => {
-  console.log(11111111111111);
   if (selectedFilter.value === "dateAscending") {
     return [...notes.value].sort((a, b) => new Date(a.date) - new Date(b.date));
   } else if (selectedFilter.value === "dateDescending") {

@@ -1,12 +1,8 @@
 <template>
   <div>
     <select :value="modelValue" @input="emitReadyVarian">
-      <option
-        v-for="(option, index) in optionsBase"
-        :key="index"
-        :value="option"
-      >
-        {{ option }}
+      <option v-for="val in optionsBase" :value="val.option">
+        {{ val.name }}
       </option>
     </select>
   </div>
@@ -19,7 +15,7 @@ const props = defineProps({
     type: String,
   },
   optionsBase: {
-    type: Array,
+    type: Object,
   },
 });
 
