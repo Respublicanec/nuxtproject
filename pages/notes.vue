@@ -60,6 +60,7 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
+  {{ checkbox }}
 </template>
 
 <script setup>
