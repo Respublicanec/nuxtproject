@@ -20,12 +20,21 @@
       >
         Ваши заметки
       </h1>
-      Фильтровать по:
-      <BaseSelect
-        :value="sd"
-        v-model="selectedFilter"
-        :optionsBase="options"
-      ></BaseSelect>
+      <div class="sort">
+        <div class="sort-parameter">
+          Сортировать по:
+
+          <BaseSelect
+            :value="sd"
+            v-model="selectedFilter"
+            :optionsBase="options"
+          ></BaseSelect>
+        </div>
+        <div class="sort-parameter">
+          Только редактируемые
+          <BaseInput v-model="checkbox" type="checkbox" />
+        </div>
+      </div>
       <div>
         <ModalEditCreateNote
           v-if="visibilitiModal"
@@ -81,6 +90,7 @@ const editNote = (id) => {
   defaultValue.value.title = note.title;
   defaultValue.value.bgColor = note.bgColor;
   editNoteIndex.value = notes.value.indexOf(note);
+  note.dateEdited = note.date;
   visibilitiModal.value = true;
 };
 
@@ -98,18 +108,17 @@ const cancelModal = () => {
 };
 
 const handleNewNotes = (note) => {
-  if (
-    editNoteIndex.value !== null &&
-    editNoteIndex.value < notes.value.length
-  ) {
+  if (editNoteIndex.value !== null) {
     notes.value[editNoteIndex.value].title = note.title;
     notes.value[editNoteIndex.value].bgColor = note.bgColor;
+    notes.value[editNoteIndex.value].date = new Date().toISOString();
   } else {
     notes.value.push({
       title: note.title,
       bgColor: note.bgColor,
       date: new Date().toISOString(),
       id: new Date().getTime(),
+      dateEdited: null,
     });
   }
 
@@ -134,13 +143,23 @@ const options = ref([
 
 const selectedFilter = ref("");
 
+const checkbox = ref(false);
+
 const filteredNotes = computed(() => {
+  const editingCheck = () => {
+    if (checkbox.value === true) {
+      return notes.value.filter((note) => note.dateEdited !== null);
+    } else {
+      return notes.value;
+    }
+  };
+  const filtered = editingCheck();
   if (selectedFilter.value === "dateAscending") {
-    return [...notes.value].sort((a, b) => new Date(a.date) - new Date(b.date));
+    return [...filtered].sort((a, b) => new Date(a.date) - new Date(b.date));
   } else if (selectedFilter.value === "dateDescending") {
-    return [...notes.value].sort((a, b) => new Date(b.date) - new Date(a.date));
+    return [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
   }
-  return notes.value;
+  return filtered;
 });
 
 onMounted(loadNotes);
@@ -209,5 +228,16 @@ onMounted(loadNotes);
 .btn {
   width: 25px;
   height: 25px;
+}
+.sort {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+  width: 500px;
+}
+
+.sort-parameter {
+  grid-template-columns: 1fr;
+  padding-right: 50px;
 }
 </style>

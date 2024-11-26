@@ -1,11 +1,19 @@
 <template>
   <div>
     <input
+      v-if="isInput"
       :class="['just-input', { colorChangeInput: props.type === 'color' }]"
       placeholder="Введите текст заметки"
       :value="modelValue"
       @input="oneChange"
       :type="props.type"
+    />
+
+    <input
+      v-else
+      type="checkbox"
+      :checked="modelValue"
+      @change="emitCheckbox"
     />
   </div>
 </template>
@@ -15,19 +23,25 @@ const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
   modelValue: {
-    type: String,
+    type: [String, Boolean],
   },
   type: {
     type: String,
     default: "text",
     validator: (value) => {
-      return ["color", "text"].includes(value);
+      return ["color", "text", "checkbox"].includes(value);
     },
   },
 });
 
+const isInput = computed(() => props.type !== "checkbox");
+
 const oneChange = (evt) => {
   emit("update:modelValue", evt.target.value);
+};
+
+const emitCheckbox = (evt) => {
+  emit("update:modelValue", evt.target.checked);
 };
 </script>
 
