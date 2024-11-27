@@ -146,14 +146,15 @@ const selectedFilter = ref("");
 
 const checkbox = ref(false);
 
+const editingCheck = () => {
+  if (checkbox.value === true) {
+    return notes.value.filter((note) => note.dateEdited !== null);
+  } else {
+    return notes.value;
+  }
+};
+
 const filteredNotes = computed(() => {
-  const editingCheck = () => {
-    if (checkbox.value === true) {
-      return notes.value.filter((note) => note.dateEdited !== null);
-    } else {
-      return notes.value;
-    }
-  };
   const filtered = editingCheck();
   if (selectedFilter.value === "dateAscending") {
     return [...filtered].sort((a, b) => new Date(a.date) - new Date(b.date));
