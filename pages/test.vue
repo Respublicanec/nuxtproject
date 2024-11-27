@@ -3,6 +3,9 @@
   <div>Выбранный вариант: {{ acceptedOption }}</div>
   {{ titles }}
   {{ results }}
+  <BaseButton padding="10px" width="150px" borderColor="#3797c4">
+    <p>dgdfg</p>
+  </BaseButton>
 </template>
 
 <script setup>
