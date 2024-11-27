@@ -28,11 +28,10 @@ const props = defineProps({
 });
 
 const oneChange = (evt) => {
-  if (props.type === "checkbox") {
-    emit("update:modelValue", evt.target.checked);
-  } else {
-    emit("update:modelValue", evt.target.value);
-  }
+  emit(
+    "update:modelValue",
+    props.type === "checkbox" ? evt.target.checked : evt.target.value
+  );
 };
 </script>
 
