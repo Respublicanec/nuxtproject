@@ -1,20 +1,18 @@
 <template>
-  <div>
-    <button
-      @mouseover="colorChangeButton = true"
-      @mouseleave="colorChangeButton = false"
-      :class="['base-button', { colorChangeButton }]"
-      :style="{
-        borderRadius: borderRadius,
-        boxShadow: boxShadow,
-        padding: padding,
-        width: width,
-        borderColor: borderColor,
-      }"
-    >
-      {{ title }}
-    </button>
-  </div>
+  <button
+    @mouseover="colorChangeButton = true"
+    @mouseleave="colorChangeButton = false"
+    :class="['base-button', { colorChangeButton }]"
+    :style="{
+      borderRadius: borderRadius,
+      boxShadow: boxShadow,
+      padding: padding,
+      width: width,
+      borderColor: borderColor,
+    }"
+  >
+    {{ title }}
+  </button>
 </template>
 
 <script setup>
