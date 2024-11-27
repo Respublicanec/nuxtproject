@@ -60,7 +60,6 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
-  {{ checkbox }}
 </template>
 
 <script setup>
@@ -91,7 +90,7 @@ const editNote = (id) => {
   defaultValue.value.title = note.title;
   defaultValue.value.bgColor = note.bgColor;
   editNoteIndex.value = notes.value.indexOf(note);
-  note.dateEdited = note.date;
+
   visibilitiModal.value = true;
 };
 
@@ -112,7 +111,7 @@ const handleNewNotes = (note) => {
   if (editNoteIndex.value !== null) {
     notes.value[editNoteIndex.value].title = note.title;
     notes.value[editNoteIndex.value].bgColor = note.bgColor;
-    notes.value[editNoteIndex.value].date = new Date().toISOString();
+    notes.value[editNoteIndex.value].dateEdited = new Date().toISOString();
   } else {
     notes.value.push({
       title: note.title,
