@@ -11,8 +11,7 @@
       borderColor: borderColor,
     }"
   >
-    <slot></slot>
-    {{ title }}
+    <slot>{{ title }}</slot>
   </button>
 </template>
 

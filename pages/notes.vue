@@ -8,7 +8,7 @@
       padding="10px"
       width="150px"
       borderColor="#3797c4"
-    />
+    ></BaseButton>
   </div>
   <div class="container">
     <div>
@@ -50,7 +50,17 @@
           @deleteNote="deleteNote(note.id)"
           @editNote="editNote(note.id)"
           :note="note"
-        />
+        >
+          <template #title>
+            <h2 class="title">{{ note.title }}</h2>
+          </template>
+          <template #description>
+            <div class="description">
+              {{ note.description }}
+            </div>
+          </template>
+          <template #date>{{ formatDate(note.date) }}</template>
+        </Note>
       </ul>
 
       <div v-if="noteCount === 0">Заметок пока нет</div>
@@ -76,6 +86,7 @@ const saveNotes = () => {
 
 const defaultValue = ref({
   title: "",
+  description: "",
   bgColor: "#ffffff",
 });
 
@@ -88,6 +99,7 @@ const searchNote = (notes, id) => {
 const editNote = (id) => {
   const note = searchNote(notes.value, id);
   defaultValue.value.title = note.title;
+  defaultValue.value.description = note.description;
   defaultValue.value.bgColor = note.bgColor;
   editNoteIndex.value = notes.value.indexOf(note);
 
@@ -104,6 +116,7 @@ const cancelModal = () => {
   visibilitiModal.value = false;
   editNoteIndex.value = null;
   defaultValue.value.title = "";
+  defaultValue.value.description = "";
   defaultValue.value.bgColor = "#ffffff";
 };
 
@@ -115,6 +128,7 @@ const handleNewNotes = (note) => {
   } else {
     notes.value.push({
       title: note.title,
+      description: note.description,
       bgColor: note.bgColor,
       date: new Date().toISOString(),
       id: new Date().getTime(),
@@ -125,6 +139,7 @@ const handleNewNotes = (note) => {
   visibilitiModal.value = false;
   editNoteIndex.value = null;
   defaultValue.value.title = "";
+  defaultValue.value.description = "";
   defaultValue.value.bgColor = "#ffffff";
 
   saveNotes();

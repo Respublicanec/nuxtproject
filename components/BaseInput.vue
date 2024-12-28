@@ -2,7 +2,7 @@
   <div>
     <input
       :class="['just-input', { colorChangeInput: props.type === 'color' }]"
-      placeholder="Введите текст заметки"
+      :placeholder="placeholder"
       :value="modelValue"
       :checked="value"
       @input="oneChange"
@@ -17,6 +17,10 @@ const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
   modelValue: {
     type: [String, Boolean],
+  },
+  placeholder: {
+    type: String,
+    default: "Введите текст заметки",
   },
   type: {
     type: String,
