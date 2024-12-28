@@ -8,7 +8,7 @@
       padding="10px"
       width="150px"
       borderColor="#3797c4"
-    />
+    ></BaseButton>
   </div>
   <div class="container">
     <div>
@@ -50,7 +50,10 @@
           @deleteNote="deleteNote(note.id)"
           @editNote="editNote(note.id)"
           :note="note"
-        />
+        >
+          <template #note>{{ note.title }}</template>
+          <template #dateSlot>{{ formatDate(note.date) }}</template>
+        </Note>
       </ul>
 
       <div v-if="noteCount === 0">Заметок пока нет</div>

@@ -5,8 +5,10 @@
       <button class="btn" @click="deleteNote">x</button>
     </div>
     <span>
-      {{ note.title }}
-      <div class="date">{{ formatDate(note.date) }}</div>
+      <slot name="note"></slot>
+      <div class="date">
+        <slot name="dateSlot"></slot>
+      </div>
     </span>
   </li>
   {{ titles }}
