@@ -108,7 +108,7 @@ const editNote = (id) => {
 
 const titleNoteValue = ref("");
 
-const notes = ref([{}]);
+const notes = ref([]);
 
 const visibilitiModal = ref(false);
 
@@ -177,6 +177,23 @@ const filteredNotes = computed(() => {
   }
   return filtered;
 });
+
+const oldNotes = ref(notes.value.length);
+
+watch(
+  notes,
+  (newNotes) => {
+    const numOldNotes = oldNotes.value;
+    oldNotes.value = newNotes.length;
+
+    if (newNotes.length > numOldNotes) {
+      console.log("Заметка добавленна");
+    } else if (newNotes.length < numOldNotes) {
+      console.log("Заметка удалена");
+    }
+  },
+  { deep: true }
+);
 
 onMounted(loadNotes);
 </script>
