@@ -2,7 +2,11 @@
   <div>
     <div class="modal">
       <button class="btn-cancel" @click="emit('cancel')">x</button>
-      <BaseInput v-model="textNote.title" />
+      <BaseInput
+        v-model="textNote.title"
+        placeholder="Введите заголовок заметки"
+      />
+      <BaseInput v-model="textNote.description" />
       <BaseInput v-model="textNote.bgColor" type="color" />
       <BaseButton class="btn-new-note" @click="addNewNote" :title="titleText" />
     </div>
@@ -13,7 +17,7 @@
 const props = defineProps({
   textValue: {
     type: Object,
-    default: () => ({ title: "", bgColor: "" }),
+    default: () => ({ title: "", description: "", bgColor: "" }),
   },
   numberIndex: {
     type: Number,
