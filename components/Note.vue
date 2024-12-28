@@ -5,9 +5,9 @@
       <button class="btn" @click="deleteNote">x</button>
     </div>
     <span>
-      <slot name="note"></slot>
+      <slot name="titles"></slot>
       <div class="date">
-        <slot name="dateSlot"></slot>
+        <slot name="date"></slot>
       </div>
     </span>
   </li>
