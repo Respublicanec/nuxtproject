@@ -51,7 +51,7 @@
           @editNote="editNote(note.id)"
           :note="note"
         >
-          <template #titles>{{ note.title }}</template>
+          <template #title>{{ note.title }}</template>
           <template #date>{{ formatDate(note.date) }}</template>
         </Note>
       </ul>

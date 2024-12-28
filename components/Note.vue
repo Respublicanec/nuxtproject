@@ -5,7 +5,7 @@
       <button class="btn" @click="deleteNote">x</button>
     </div>
     <span>
-      <slot name="titles"></slot>
+      <slot name="title"></slot>
       <div class="date">
         <slot name="date"></slot>
       </div>
