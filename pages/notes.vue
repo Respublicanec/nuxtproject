@@ -177,14 +177,12 @@ const filteredNotes = computed(() => {
   return filtered;
 });
 
-const oldNotes = ref(notes.value.length);
-
 watch(noteCount, (newNotes, oldNotes) => {
   if (newNotes > oldNotes) {
     console.log("Заметка добавленна");
-  } else if (newNotes < oldNotes) {
-    console.log("Заметка удалена");
+    return;
   }
+  console.log("Заметка удалена");
 });
 
 onMounted(loadNotes);
