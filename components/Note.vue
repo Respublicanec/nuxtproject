@@ -12,7 +12,6 @@
       </div>
     </span>
   </li>
-  {{ titles }}
 </template>
 <script setup>
 defineProps({

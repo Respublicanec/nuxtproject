@@ -25,7 +25,6 @@
           Сортировать по:
 
           <BaseSelect
-            :value="sd"
             v-model="selectedFilter"
             :optionsBase="options"
           ></BaseSelect>
@@ -108,7 +107,7 @@ const editNote = (id) => {
 
 const titleNoteValue = ref("");
 
-const notes = ref([{}]);
+const notes = ref([]);
 
 const visibilitiModal = ref(false);
 
@@ -176,6 +175,14 @@ const filteredNotes = computed(() => {
     return [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
   }
   return filtered;
+});
+
+watch(noteCount, (newNotes, oldNotes) => {
+  if (newNotes > oldNotes) {
+    console.log("Заметка добавленна");
+    return;
+  }
+  console.log("Заметка удалена");
 });
 
 onMounted(loadNotes);
