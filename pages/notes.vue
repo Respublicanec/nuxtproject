@@ -193,11 +193,6 @@ onMounted(loadNotes);
   width: 100px;
 }
 
-.btn-modal {
-  width: 110px;
-  background-color: #32ca49;
-}
-
 .container {
   flex-wrap: wrap;
   width: auto;
