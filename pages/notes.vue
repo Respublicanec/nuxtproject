@@ -70,6 +70,7 @@
     <hr />
     <strong>Общее количество: {{ noteCount }}</strong>
   </div>
+  {{ defaultValue }}
 </template>
 
 <script setup>
@@ -91,8 +92,10 @@ const saveNotes = () => {
 const defaultValue = ref({
   title: "",
   description: "",
-  bgColor: "#ffffff",
+  bgColor: "#ffafff",
 });
+
+provide("defaultValue", defaultValue);
 
 const editNoteIndex = ref(null);
 
@@ -121,7 +124,7 @@ const cancelModal = () => {
   editNoteIndex.value = null;
   defaultValue.value.title = "";
   defaultValue.value.description = "";
-  defaultValue.value.bgColor = "#ffffff";
+  defaultValue.value.bgColor = "#ffafff";
 };
 
 const handleNewNotes = (note) => {
@@ -144,7 +147,7 @@ const handleNewNotes = (note) => {
   editNoteIndex.value = null;
   defaultValue.value.title = "";
   defaultValue.value.description = "";
-  defaultValue.value.bgColor = "#ffffff";
+  defaultValue.value.bgColor = "#ffafff";
 
   saveNotes();
 };

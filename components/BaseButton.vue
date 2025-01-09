@@ -9,6 +9,7 @@
       padding: padding,
       width: width,
       borderColor: borderColor,
+      backgroundColor: defaultValue.bgColor,
     }"
   >
     <slot>{{ title }}</slot>
@@ -37,13 +38,14 @@ defineProps({
   },
 });
 
+const defaultValue = inject("defaultValue");
+
 const colorChangeButton = ref(false);
 </script>
 
 <style>
 .base-button {
   height: 60px;
-  background: #656f74;
   font-size: 16px;
   color: white;
 }

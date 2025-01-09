@@ -30,7 +30,7 @@ const textNote = ref(props.textValue);
 
 const addNewNote = () => {
   emit("success", textNote.value);
-  textNote.value = { title: "", bgColor: "" };
+  textNote.value = { title: "", bgColor: "#ffafff" };
 };
 
 const titleText = computed(() => {
