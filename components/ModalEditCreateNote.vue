@@ -34,7 +34,9 @@ const addNewNote = () => {
 };
 
 const titleText = computed(() => {
-  return typeof props.numberIndex === "number" ? "Сохранить" : "Добавить";
+  return typeof props.numberIndex === "number"
+    ? "Сохранить"
+    : inject("textButton");
 });
 </script>
 

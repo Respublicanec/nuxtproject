@@ -1,5 +1,6 @@
 <template>
   <div>
+    <input v-model="textButton" />
     <BaseButton
       @click="visibilitiModal = true"
       title="Создать"
@@ -72,6 +73,10 @@
 </template>
 
 <script setup>
+const textButton = ref("Добавить");
+
+provide("textButton", textButton);
+
 const loadNotes = () => {
   const storedNotes = localStorage.getItem("notes");
   if (storedNotes) {
